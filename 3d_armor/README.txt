@@ -160,6 +160,10 @@ Adds wear to a single armor itemstack, triggers `on_damage` callbacks and
 updates the necessary inventories. Also handles item destruction callbacks
 and so should NOT be called from `on_unequip` to avoid an infinite loop.
 
+armor:update_skin(player_name)
+
+Triggers a skin update with the same action as if a field with `skins_set` was submitted.
+
 Item Callbacks:
 
 on_equip = func(player, index, stack)
