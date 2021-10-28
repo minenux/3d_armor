@@ -65,6 +65,9 @@ armor_water_protect = true
 -- Enable fire protection (defaults true if using ethereal mod)
 armor_fire_protect = false
 
+-- When fire protection is enabled allows you to disable fire damage from torches
+armor_fire_protect_torch = false
+
 -- Enable punch damage effects.
 armor_punch_damage = true
 
