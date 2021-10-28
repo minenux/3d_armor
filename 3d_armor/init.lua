@@ -196,6 +196,9 @@ local function init_player_armor(player)
 			armor:set_player_armor(player)
 		end,
 		allow_put = function(inv, listname, index, put_stack, player)
+			if player:get_player_name() ~= name then
+				return 0
+			end
 			local element = armor:get_element(put_stack:get_name())
 			if not element then
 				return 0
@@ -211,9 +214,15 @@ local function init_player_armor(player)
 			return 1
 		end,
 		allow_take = function(inv, listname, index, stack, player)
+			if player:get_player_name() ~= name then
+				return 0
+			end
 			return stack:get_count()
 		end,
 		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
+			if player:get_player_name() ~= name then
+				return 0
+			end
 			return count
 		end,
 	}, name)
