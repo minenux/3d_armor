@@ -107,6 +107,7 @@ armor:register_on_damage(function(player, index, stack)
 	local def = stack:get_definition()
 	if name and def and def.description and stack:get_wear() > 60100 then
 		minetest.chat_send_player(name, S("Your @1 is almost broken!", def.description))
+		-- minetest.sound_play("default_tool_breaks", {to_player = name, gain = 2.0})
 	end
 end)
 
@@ -115,6 +116,7 @@ armor:register_on_destroy(function(player, index, stack)
 	local def = stack:get_definition()
 	if name and def and def.description then
 		minetest.chat_send_player(name, S("Your @1 got destroyed!", def.description))
+		-- minetest.sound_play("default_tool_breaks", {to_player = name, gain = 2.0})
 	end
 end)
 
