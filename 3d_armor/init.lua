@@ -112,6 +112,7 @@ end)
 local function validate_armor_inventory(player)
 	-- Workaround for detached inventory swap exploit
 	local _, inv = armor:get_valid_player(player, "[validate_armor_inventory]")
+	local pos = player:getpos()
 	if not inv then
 		return
 	end
@@ -142,6 +143,7 @@ local function validate_armor_inventory(player)
 				elements[element] = true;
 			else
 				inv:remove_item("armor", stack)
+				minetest.item_drop(stack, player, pos)
 				-- The following code returns invalid items to the player's main
 				-- inventory but could open up the possibity for a hacked client
 				-- to receive items back they never really had. I am not certain
