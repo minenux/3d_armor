@@ -163,6 +163,18 @@ Adds wear to a single armor itemstack, triggers `on_damage` callbacks and
 updates the necessary inventories. Also handles item destruction callbacks
 and so should NOT be called from `on_unequip` to avoid an infinite loop.
 
+armor:remove_all(player)
+
+Removes all armors from the player's inventory without triggering any callback.
+
+armor:equip(player, armor_name)
+
+Equip the armor, removing the itemstack from the main inventory if there's one.
+
+armor:unequip(player, armor_name)
+
+Unequip the armor, adding the itemstack to the main inventory.
+
 armor:update_skin(player_name)
 
 Triggers a skin update with the same action as if a field with `skins_set` was submitted.

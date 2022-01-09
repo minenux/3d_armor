@@ -402,6 +402,12 @@ end
 
 armor.damage = function(self, player, index, stack, use)
 	local old_stack = ItemStack(stack)
+	local worn_armor = armor:get_weared_armor_elements(player)
+	local armor_worn_cnt = 0
+	for k,v in pairs(worn_armor) do
+		armor_worn_cnt = armor_worn_cnt + 1
+	end
+	use = math.ceil(use/armor_worn_cnt)
 	stack:add_wear(use)
 	self:run_callbacks("on_damage", player, index, stack)
 	self:set_inventory_stack(player, index, stack)
@@ -410,6 +416,70 @@ armor.damage = function(self, player, index, stack, use)
 		self:run_callbacks("on_destroy", player, index, old_stack)
 		self:set_player_armor(player)
 	end
+end
+
+armor.get_weared_armor_elements = function(self, player)
+	local name, inv = self:get_valid_player(player, "[get_weared_armor]")
+	local weared_armor = {}
+	if not name then
+		return
+	end
+	for i=1, inv:get_size("armor") do
+		local item_name = inv:get_stack("armor", i):get_name()
+		local element = self:get_element(item_name)
+		if element ~= nil then
+				weared_armor[element] = item_name
+		end
+	end
+	return weared_armor
+end
+
+armor.equip = function(self, player, armor_name)
+	local name, inv = self:get_valid_player(player, "[equip]")
+	local weared_armor = self:get_weared_armor_elements(player)
+	local armor_element = self:get_element(armor_name)
+	if not name then
+		return
+	elseif self:get_element(armor_name) == nil then
+		return
+	elseif inv:contains_item("armor", ItemStack(armor_name)) then
+		return
+	end
+	if weared_armor[armor_element] ~= nil then
+		self:unequip(player, weared_armor[armor_element])
+	end
+	inv:add_item("armor", ItemStack(armor_name))
+	minetest.after(0, function() player:get_inventory():remove_item("main", ItemStack(armor_name)) end)
+	self:set_player_armor(player)
+	self:save_armor_inventory(player)
+end
+
+armor.unequip = function(self, player, armor_name)
+	local name, inv = self:get_valid_player(player, "[unequip]")
+	if not name then
+		return
+	elseif self:get_element(armor_name) == nil then
+		return
+	elseif not inv:contains_item("armor", ItemStack(armor_name)) then
+		return
+	end
+	inv:remove_item("armor", ItemStack(armor_name))
+	minetest.after(0, function() player:get_inventory():add_item("main", ItemStack(armor_name)) end)
+	self:set_player_armor(player)
+	self:save_armor_inventory(player)
+	self:save_armor_inventory(player)
+end
+
+armor.remove_all = function(self, player)
+	local name, armor_inv = self:get_valid_player(player, "[remove_all]")
+	local name, inv = self:get_valid_player(player, "[remove_all]")
+	if not name then
+		return
+	end
+	armor_inv:set_list("armor", {})
+	inv:set_list("armor", {})
+	self:set_player_armor(player)
+	self:save_armor_inventory(player)
 end
 
 armor.get_player_skin = function(self, name)
