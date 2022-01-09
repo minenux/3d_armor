@@ -18,10 +18,10 @@ armor_init_delay (Initialization delay) int 2
 armor_init_times (Initialization attempts) int 10
 
 # Increase this if armor is not getting into bones due to server lag.
-armor_bones_delay (Delay for bones) int 1
+armor_bones_delay (Delay for bones) int 2
 
 # How often player armor items are updated.
-armor_update_time (Armor refresh rate [seconds]) int 1
+armor_update_time (Armor refresh rate [seconds]) int 2
 
 # Drop armor when a player dies.
 # Uses bones mod if present, otherwise items are dropped around the player.
@@ -42,10 +42,10 @@ armor_heal_multiplier (Armor healing multiplier) float 1
 armor_water_protect (Enable water protection) bool true
 
 # Enable fire protection (defaults true if using ethereal mod).
-armor_fire_protect (Enable fire protection) bool false
+armor_fire_protect (Enable fire protection) bool true
 
 # Enable fire damage from torches (defaults true if using ethereal mod).
-armor_fire_protect_torch (Enable fire protection torch damage) bool false
+armor_fire_protect_torch (Enable fire protection torch damage) bool true
 
 # Enable punch damage effects.
 armor_punch_damage (Enable damage effects) bool true
