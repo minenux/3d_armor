@@ -67,7 +67,9 @@ minetest.register_on_joinplayer(function(player)
 	local name = player:get_player_name()
 	wieldview.wielded_item[name] = ""
 	minetest.after(0, function(player)
-		wieldview:update_wielded_item(player)
+		if player then
+			wieldview:update_wielded_item(player)
+		end
 	end, player)
 end)
 
@@ -75,7 +77,9 @@ minetest.register_globalstep(function(dtime)
 	time = time + dtime
 	if time > update_time then
 		for _,player in ipairs(minetest.get_connected_players()) do
-			wieldview:update_wielded_item(player)
+			if player then
+				wieldview:update_wielded_item(player)
+			end
 		end
 		time = 0
 	end
