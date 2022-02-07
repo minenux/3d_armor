@@ -53,6 +53,7 @@ armor = {
 		gold = "default:gold_ingot",
 		mithril = "moreores:mithril_ingot",
 		crystal = "ethereal:crystal_ingot",
+		nether = "nether:nether_ingot",
 	},
 	fire_nodes = {
 		{"nether:lava_source",      5, 8},
@@ -76,7 +77,7 @@ armor = {
 		on_destroy = {},
 	},
 	migrate_old_inventory = true,
-	version = "0.4.12",
+	version = "0.4.12.1",
 }
 
 armor.config = {
@@ -96,6 +97,7 @@ armor.config = {
 	material_gold = true,
 	material_mithril = true,
 	material_crystal = true,
+	material_nether = true,
 	water_protect = true,
 	fire_protect = minetest.get_modpath("ethereal") ~= nil,
 	fire_protect_torch = minetest.get_modpath("ethereal") ~= nil,
