@@ -6,4 +6,5 @@ fire?
 ethereal?
 bakedclay?
 intllib?
+moreores?
 nether?
