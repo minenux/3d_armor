@@ -199,6 +199,11 @@ armor.config = {
 --    damage_groups = {cracky=3, snappy=2, choppy=3, crumbly=2, level=1},
 --  })
 armor.register_armor = function(self, name, def)
+	local check_mat_exists = string.match(name, "%:.+_(.+)$")
+	if check_mat_exists == nil then
+		minetest.log("warning:[3d_armor] Registered armor "..name..
+		" does not have \"_material\" specified at the end of the item registration name")
+	end
 	minetest.register_tool(name, def)
 end
 
