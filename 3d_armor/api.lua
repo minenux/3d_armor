@@ -501,8 +501,8 @@ armor.punch = function(self, player, hitter, time_from_last_punch, tool_capabili
 	local list = armor_inv:get_list("armor")
 	for i, stack in pairs(list) do
 		if stack:get_count() == 1 then
-			local name = stack:get_name()
-			local use = minetest.get_item_group(name, "armor_use") or 0
+			local itemname = stack:get_name()
+			local use = minetest.get_item_group(itemname, "armor_use") or 0
 			local damage = use > 0
 			local def = stack:get_definition() or {}
 			if type(def.on_punched) == "function" then
@@ -553,7 +553,7 @@ armor.punch = function(self, player, hitter, time_from_last_punch, tool_capabili
 				end
 			end
 			if damage == true and hitter == "fire" then
-				damage = minetest.get_item_group(name, "flammable") > 0
+				damage = minetest.get_item_group(itemname, "flammable") > 0
 			end
 			if damage == true then
 				self:damage(player, i, stack, use)
@@ -682,6 +682,8 @@ armor.remove_all = function(self, player)
 	self:save_armor_inventory(player)
 end
 
+local skin_mod
+
 --- Retrieves player's current skin.
 --
 --  @function armor:get_player_skin
@@ -689,12 +691,16 @@ end
 --  @treturn string Skin filename.
 armor.get_player_skin = function(self, name)
 	if (self.skin_mod == "skins" or self.skin_mod == "simple_skins") and skins.skins[name] then
+		skin_mod = skins.skins[name]..".png"
 		return skins.skins[name]..".png"
 	elseif self.skin_mod == "u_skins" and u_skins.u_skins[name] then
-		return u_skins.u_skins[name]..".png"
+		skin_mod = skins.skins[name]..".png"
+		return u_skins.skins[name]..".png"
 	elseif self.skin_mod == "wardrobe" and wardrobe.playerSkins and wardrobe.playerSkins[name] then
+		skin_mod = wardrobe.playerSkins[name]
 		return wardrobe.playerSkins[name]
 	end
+	skin_mod = armor.default_skin..".png"
 	return armor.default_skin..".png"
 end
 
@@ -889,7 +895,16 @@ armor.drop_armor = function(pos, stack)
 	if node then
 		local obj = minetest.add_item(pos, stack)
 		if obj then
-			obj:setvelocity({x=math.random(-1, 1), y=5, z=math.random(-1, 1)})
+			obj:set_velocity({x=math.random(-1, 1), y=5, z=math.random(-1, 1)})
 		end
 	end
+end
+
+--- Allows skin mod to be set manually.
+--
+--  Useful for skin mod forks that do not use the same name.
+--
+--  @tparam string mod Name of skin mod. Recognized names are "simple\_skins", "u\_skins", & "wardrobe".
+armor.set_skin_mod = function(mod)
+	skin_mod = mod
 end
