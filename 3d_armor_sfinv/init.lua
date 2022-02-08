@@ -2,7 +2,7 @@
 local S = armor_i18n.gettext
 
 if not minetest.global_exists("sfinv") then
-	minetest.log("warning", S("3d_armor_sfinv: Mod loaded but unused."))
+	minetest.log("warning", "[3d_armor_sfinv]: Mod loaded but unused.")
 	return
 end
 
