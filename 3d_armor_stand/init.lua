@@ -97,7 +97,7 @@ local function update_entity(pos)
 				yaw = math.pi / 2
 			end
 		end
-		object:setyaw(yaw)
+		object:set_yaw(yaw)
 		object:set_properties({textures={texture}})
 	end
 end
@@ -307,7 +307,7 @@ minetest.register_entity("3d_armor_stand:armor_entity", {
 	pos = nil,
 	timer = 0,
 	on_activate = function(self)
-		local pos = self.object:getpos()
+		local pos = self.object:get_pos()
 		if pos then
 			self.pos = vector.round(pos)
 			update_entity(pos)

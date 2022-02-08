@@ -1,19 +1,18 @@
--- support for i18n
-armor_i18n = { }
-local MP = minetest.get_modpath(minetest.get_current_modname())
-armor_i18n.gettext, armor_i18n.ngettext = dofile(MP.."/intllib.lua")
--- escaping formspec
-armor_i18n.fgettext = function(...) return minetest.formspec_escape(armor_i18n.gettext(...)) end
--- local functions
-local S = armor_i18n.gettext
-local F = armor_i18n.fgettext
-
 local modname = minetest.get_current_modname()
 local modpath = minetest.get_modpath(modname)
 local worldpath = minetest.get_worldpath()
 local last_punch_time = {}
 local pending_players = {}
 local timer = 0
+
+-- support for i18n
+armor_i18n = { }
+armor_i18n.gettext, armor_i18n.ngettext = dofile(modpath.."/intllib.lua")
+-- escaping formspec
+armor_i18n.fgettext = function(...) return minetest.formspec_escape(armor_i18n.gettext(...)) end
+-- local functions
+local S = armor_i18n.gettext
+local F = armor_i18n.fgettext
 
 dofile(modpath.."/api.lua")
 
@@ -79,7 +78,7 @@ end
 
 if minetest.get_modpath("technic") then
 	armor.formspec = armor.formspec..
-		"label[5,2.5;"..F("Radiation")..":  armor_group_radiation]"
+		"label[5,2.5;"..F("Radiation")..": armor_group_radiation]"
 	armor:register_armor_group("radiation")
 end
 local skin_mods = {"skins", "u_skins", "simple_skins", "wardrobe"}
@@ -111,9 +110,9 @@ dofile(modpath.."/armor.lua")
 
 armor.formspec = armor.formspec..
 	"label[5,1;"..F("Level")..": armor_level]"..
-	"label[5,1.5;"..F("Heal")..":  armor_attr_heal]"
+	"label[5,1.5;"..F("Heal")..": armor_attr_heal]"
 if armor.config.fire_protect then
-	armor.formspec = armor.formspec.."label[5,2;"..F("Fire")..":  armor_attr_fire]"
+	armor.formspec = armor.formspec.."label[5,2;"..F("Fire")..": armor_attr_fire]"
 end
 
 armor:register_on_damage(function(player, index, stack)
@@ -137,7 +136,7 @@ end)
 local function validate_armor_inventory(player)
 	-- Workaround for detached inventory swap exploit
 	local _, inv = armor:get_valid_player(player, "[validate_armor_inventory]")
-	local pos = player:getpos()
+	local pos = player:get_pos()
 	if not inv then
 		return
 	end
@@ -187,9 +186,9 @@ local function validate_armor_inventory(player)
 	end
 end
 
-local function init_player_armor(player)
-	local name = player:get_player_name()
-	local pos = player:getpos()
+local function init_player_armor(initplayer)
+	local name = initplayer:get_player_name()
+	local pos = initplayer:get_pos()
 	if not name or not pos then
 		return false
 	end
@@ -241,20 +240,20 @@ local function init_player_armor(player)
 		end,
 	}, name)
 	armor_inv:set_size("armor", 6)
-	if not armor:load_armor_inventory(player) and armor.migrate_old_inventory then
-		local player_inv = player:get_inventory()
+	if not armor:load_armor_inventory(initplayer) and armor.migrate_old_inventory then
+		local player_inv = initplayer:get_inventory()
 		player_inv:set_size("armor", 6)
 		for i=1, 6 do
 			local stack = player_inv:get_stack("armor", i)
 			armor_inv:set_stack("armor", i, stack)
 		end
-		armor:save_armor_inventory(player)
+		armor:save_armor_inventory(initplayer)
 		player_inv:set_size("armor", 0)
 	end
 	for i=1, 6 do
 		local stack = armor_inv:get_stack("armor", i)
 		if stack:get_count() > 0 then
-			armor:run_callbacks("on_equip", player, i, stack)
+			armor:run_callbacks("on_equip", initplayer, i, stack)
 		end
 	end
 	armor.def[name] = {
@@ -290,7 +289,7 @@ local function init_player_armor(player)
 			end
 		end
 	end
-	armor:set_player_armor(player)
+	armor:set_player_armor(initplayer)
 	return true
 end
 
@@ -364,7 +363,7 @@ if armor.config.drop == true or armor.config.destroy == true then
 		end
 		armor:save_armor_inventory(player)
 		armor:set_player_armor(player)
-		local pos = player:getpos()
+		local pos = player:get_pos()
 		if pos and armor.config.destroy == false then
 			minetest.after(armor.config.bones_delay, function()
 				local meta = nil
@@ -468,7 +467,7 @@ if armor.config.water_protect == true or armor.config.fire_protect == true then
 		end
 		for _,player in pairs(minetest.get_connected_players()) do
 			local name = player:get_player_name()
-			local pos = player:getpos()
+			local pos = player:get_pos()
 			local hp = player:get_hp()
 			if not name or not pos or not hp then
 				return
