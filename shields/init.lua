@@ -1,3 +1,9 @@
+
+--- 3D Armor Shields
+--
+--  @topic shields
+
+
 -- support for i18n
 local S = armor_i18n.gettext
 
@@ -24,6 +30,14 @@ end
 
 -- Regisiter Shields
 
+--- Admin Shield
+--
+--  @shield shields:shield_admin
+--  @img shields_inv_shield_admin.png
+--  @grp armor_shield 1000
+--  @grp armor_heal 100
+--  @grp armor_use 0
+--  @grp not_int_creative_inventory 1
 armor:register_armor("shields:shield_admin", {
 	description = S("Admin Shield"),
 	inventory_image = "shields_inv_shield_admin.png",
@@ -32,7 +46,22 @@ armor:register_armor("shields:shield_admin", {
 
 minetest.register_alias("adminshield", "shields:shield_admin")
 
+
 if armor.materials.wood then
+	--- Wood Shield
+	--
+	--  @shield shields:shield_wood
+	--  @img shields_inv_shield_wood.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 0
+	--  @grp armor_use 2000
+	--  @grp flammable 1
+	--  @armorgrp fleshy 5
+	--  @damagegrp cracky 3
+	--  @damagegrp snappy 2
+	--  @damagegrp choppy 3
+	--  @damagegrp crumbly 2
+	--  @damagegrp level 1
 	armor:register_armor("shields:shield_wood", {
 		description = S("Wooden Shield"),
 		inventory_image = "shields_inv_shield_wood.png",
@@ -47,6 +76,19 @@ if armor.materials.wood then
 			play_sound_effect(player, "default_wood_footstep")
 		end,
 	})
+	--- Enhanced Wood Shield
+	--
+	--  @shield shields:shield_enhanced_wood
+	--  @img shields_inv_shield_enhanced_wood.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 0
+	--  @grp armor_use 2000
+	--  @armorgrp fleshy 8
+	--  @damagegrp cracky 3
+	--  @damagegrp snappy 2
+	--  @damagegrp choppy 3
+	--  @damagegrp crumbly 2
+	--  @damagegrp level 2
 	armor:register_armor("shields:shield_enhanced_wood", {
 		description = S("Enhanced Wood Shield"),
 		inventory_image = "shields_inv_shield_enhanced_wood.png",
@@ -77,6 +119,19 @@ if armor.materials.wood then
 end
 
 if armor.materials.cactus then
+	--- Cactus Shield
+	--
+	--  @shield shields:shield_cactus
+	--  @img shields_inv_shield_cactus.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 0
+	--  @grp armor_use 1000
+	--  @armorgrp fleshy 5
+	--  @damagegrp cracky 3
+	--  @damagegrp snappy 3
+	--  @damagegrp choppy 2
+	--  @damagegrp crumbly 2
+	--  @damagegrp level 1
 	armor:register_armor("shields:shield_cactus", {
 		description = S("Cactus Shield"),
 		inventory_image = "shields_inv_shield_cactus.png",
@@ -91,6 +146,19 @@ if armor.materials.cactus then
 			play_sound_effect(player, "default_wood_footstep")
 		end,
 	})
+	--- Enhanced Cactus Shield
+	--
+	--  @shield shields:shield_enhanced_cactus
+	--  @img shields_inv_shield_enhanced_cactus.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 0
+	--  @grp armor_use 1000
+	--  @armorgrp fleshy 8
+	--  @damagegrp cracky 3
+	--  @damagegrp snappy 3
+	--  @damagegrp choppy 2
+	--  @damagegrp crumbly 2
+	--  @damagegrp level 2
 	armor:register_armor("shields:shield_enhanced_cactus", {
 		description = S("Enhanced Cactus Shield"),
 		inventory_image = "shields_inv_shield_enhanced_cactus.png",
@@ -121,6 +189,21 @@ if armor.materials.cactus then
 end
 
 if armor.materials.steel then
+	--- Steel Shield
+	--
+	--  @shield shields:shield_steel
+	--  @img shields_inv_shield_steel.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 0
+	--  @grp armor_use 800
+	--  @grp physics_speed -0.03
+	--  @grp physics_gravity 0.03
+	--  @armorgrp fleshy 10
+	--  @damagegrp cracky 2
+	--  @damagegrp snappy 3
+	--  @damagegrp choppy 2
+	--  @damagegrp crumbly 1
+	--  @damagegrp level 2
 	armor:register_armor("shields:shield_steel", {
 		description = S("Steel Shield"),
 		inventory_image = "shields_inv_shield_steel.png",
@@ -139,6 +222,21 @@ if armor.materials.steel then
 end
 
 if armor.materials.bronze then
+	--- Bronze Shield
+	--
+	--  @shield shields:shield_bronze
+	--  @img shields_inv_shield_bronze.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 6
+	--  @grp armor_use 400
+	--  @grp physics_speed -0.03
+	--  @grp physics_gravity 0.03
+	--  @armorgrp fleshy 10
+	--  @damagegrp cracky 2
+	--  @damagegrp snappy 3
+	--  @damagegrp choppy 2
+	--  @damagegrp crumbly 1
+	--  @damagegrp level 2
 	armor:register_armor("shields:shield_bronze", {
 		description = S("Bronze Shield"),
 		inventory_image = "shields_inv_shield_bronze.png",
@@ -157,6 +255,18 @@ if armor.materials.bronze then
 end
 
 if armor.materials.diamond then
+	--- Diamond Shield
+	--
+	--  @shield shields:shield_diamond
+	--  @img shields_inv_shield_diamond.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 12
+	--  @grp armor_use 200
+	--  @armorgrp fleshy 15
+	--  @damagegrp cracky 2
+	--  @damagegrp snappy 1
+	--  @damagegrp choppy 1
+	--  @damagegrp level 3
 	armor:register_armor("shields:shield_diamond", {
 		description = S("Diamond Shield"),
 		inventory_image = "shields_inv_shield_diamond.png",
@@ -174,6 +284,21 @@ if armor.materials.diamond then
 end
 
 if armor.materials.gold then
+	--- Gold Shield
+	--
+	--  @shield shields:shield_gold
+	--  @img shields_inv_shield_gold.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 6
+	--  @grp armor_use 300
+	--  @grp physics_speed -0.04
+	--  @grp physics_gravity 0.04
+	--  @armorgrp fleshy 10
+	--  @damagegrp cracky 1
+	--  @damagegrp snappy 2
+	--  @damagegrp choppy 2
+	--  @damagegrp crumbly 3
+	--  @damagegrp level 2
 	armor:register_armor("shields:shield_gold", {
 		description = S("Gold Shield"),
 		inventory_image = "shields_inv_shield_gold.png",
@@ -192,6 +317,17 @@ if armor.materials.gold then
 end
 
 if armor.materials.mithril then
+	--- Mithril Shield
+	--
+	--  @shield shields:shield_mithril
+	--  @img shields_inv_shield_mithril.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 12
+	--  @grp armor_use 100
+	--  @armorgrp fleshy 15
+	--  @damagegrp cracky 2
+	--  @damagegrp snappy 1
+	--  @damagegrp level 3
 	armor:register_armor("shields:shield_mithril", {
 		description = S("Mithril Shield"),
 		inventory_image = "shields_inv_shield_mithril.png",
@@ -209,6 +345,18 @@ if armor.materials.mithril then
 end
 
 if armor.materials.crystal then
+	--- Crystal Shield
+	--
+	--  @shield shields:shield_crystal
+	--  @img shields_inv_shield_crystal.png
+	--  @grp armor_shield 1
+	--  @grp armor_heal 12
+	--  @grp armor_use 100
+	--  @grp armor_fire 1
+	--  @armorgrp fleshy 15
+	--  @damagegrp cracky 2
+	--  @damagegrp snappy 1
+	--  @damagegrp level 3
 	armor:register_armor("shields:shield_crystal", {
 		description = S("Crystal Shield"),
 		inventory_image = "shields_inv_shield_crystal.png",
