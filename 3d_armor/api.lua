@@ -174,7 +174,7 @@ armor.config = {
 	material_gold = true,
 	material_mithril = minetest.get_modpath("moreores") ~= nil,
 	material_crystal = true,
-	material_nether = if not minetest.get_modpath("nether") ~= nil,
+	material_nether = minetest.get_modpath("nether") ~= nil,
 	water_protect = true,
 	fire_protect = minetest.get_modpath("ethereal") ~= nil,
 	fire_protect_torch = minetest.get_modpath("ethereal") ~= nil,
