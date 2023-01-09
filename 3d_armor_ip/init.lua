@@ -1,11 +1,11 @@
+if not minetest.global_exists("inventory_plus") then
+	minetest.log("warning", "3d_armor_ip: Mod loaded but unused.")
+	return
+end
+
 -- support for i18n
 local S = armor_i18n.gettext
 local F = armor_i18n.fgettext
-
-if not minetest.global_exists("inventory_plus") then
-	minetest.log("warning", S("3d_armor_ip: Mod loaded but unused."))
-	return
-end
 
 armor.formspec = "size[8,8.5]button[6,0;2,0.5;main;"..F("Back").."]"..armor.formspec
 armor:register_on_update(function(player)
