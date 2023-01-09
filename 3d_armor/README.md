@@ -21,7 +21,7 @@ armor group level Armor Overall level is boosted by 10% when wearing a full matc
 Fire protection added by TenPlus1 when using crystal armor if Ethereal mod active, level 1
 protects against torches, level 2 for crystal spike, level 3 for fire, level 5 for lava.
 
-### Depends: 
+#### Depends: 
 
 * default
 
@@ -42,7 +42,7 @@ Optional depends
 * nether
 * moreores
 
-### Configuration
+#### Configuration
 -------------------
 
 Override the following default settings by adding them to your minetest.conf file.
