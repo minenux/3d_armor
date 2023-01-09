@@ -1,1 +1,1 @@
-Visible player armor & wielded items.
+ARMOR pack for players and wielded items.

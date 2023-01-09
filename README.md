@@ -1,23 +1,38 @@
-Modpack - 3d Armor [0.4.12]
+minetest modpack 3d Armor [0.4.12.0]
 ===========================
 
+ARMOR pack for your gameplay
+
+## Information
+--------------
+
+This mod provides ARMORS to your gameplays, such like shields, gloves, wielded, 
+helmet, chestplate, leggings and boots.
+
+![screenshot.png](screenshot.png)
+
+## Technical info
+-----------------
+
+This modpack must be named `3d_armor` and enables armor manage for the gameplay
+
+It can be download from 
+
+* https://git.minetest.io/minenux/minetest-mod-3d_armor
+* https://codeberg.org/minenux/minetest-mod-3d_armor
+
+
 ### Table of Contents
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 - [[mod] Visible Player Armor [3d_armor]](#mod-visible-player-armor-3d_armor)
 - [[mod] Visible Wielded Items [wieldview]](#mod-visible-wielded-items-wieldview)
 - [[mod] Shields [shields]](#mod-shields-shields)
 - [[mod] 3d Armor Stand [3d_armor_stand]](#mod-3d-armor-stand-3d_armor_stand)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-
-
 [mod] Visible Player Armor [3d_armor]
 -------------------------------------
 
-Minetest Version: 0.4.16 - 0.4.17.1
+Minetest Version: 0.4.16 +
 
 Game: minetest_game and many derivatives
 
