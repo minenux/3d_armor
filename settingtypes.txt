@@ -12,7 +12,7 @@ armor_material_crystal (Enable crystal armor) bool true
 armor_material_nether (Enable nether armor) bool true
 
 # Increase this if you get initialization glitches when a player first joins.
-armor_init_delay (Initialization delay) int 2
+armor_init_delay (Initialization delay if glitches) int 3
 
 # Number of initialization attempts.
 # Use in conjunction with armor_init_delay if initialization problems persist.
@@ -33,11 +33,11 @@ armor_destroy (Pulverize armor on death) bool false
 
 # You can use this to increase or decrease overall armor effectiveness,
 # eg: level_multiplier = 0.5 will reduce armor level by half.
-armor_level_multiplier (Armor effectiveness multiplier) float 1
+armor_level_multiplier (Armor effectiveness multiplier) float 0.4
 
 # You can use this to increase or decrease overall armor healing,
 # eg: armor_heal_multiplier = 0 will disable healing altogether.
-armor_heal_multiplier (Armor healing multiplier) float 1
+armor_heal_multiplier (Armor healing multiplier) float 0.1
 
 # Enable water protection (periodically restores breath when activated).
 armor_water_protect (Enable water protection) bool true
@@ -63,7 +63,7 @@ shields_disable_sounds (Disable shield sounds) bool false
 [wieldview]
 
 # Set number of seconds between visible wielded item updates.
-wieldview_update_time (Wieldview refresh rate [seconds]) int 2
+wieldview_update_time (Wieldview refresh rate [seconds]) int 3
 
 # Show nodes as tiles, disabled by default.
 wieldview_node_tiles (Show nodes as tiles) bool false
