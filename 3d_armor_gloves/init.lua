@@ -34,6 +34,8 @@ armor:register_armor("3d_armor_gloves:gloves_admin", {
 	groups = {armor_hands=1000, armor_heal=100, armor_use=0, not_in_creative_inventory=1},
 })
 
+minetest.register_alias("admingloves", "3d_armor_gloves:gloves_admin")
+
 if armor.materials.wood then
 		armor:register_armor("3d_armor_gloves:gloves_wood", {
 		description = S("Wood Gauntlets"),
