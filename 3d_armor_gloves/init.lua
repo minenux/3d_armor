@@ -28,16 +28,14 @@ end
 
 -- Regisiter Gloves/Gauntlets
 
-armor:register_armor("3d_armor:gloves_admin", {
+armor:register_armor("3d_armor_gloves:gloves_admin", {
 	description = S("Admin Gauntlets"),
 	inventory_image = "3d_armor_gloves_inv_gloves_admin.png",
 	groups = {armor_hands=1000, armor_heal=100, armor_use=0, not_in_creative_inventory=1},
 })
 
-minetest.register_alias("admingloves", "3d_armor:gloves_admin")
-
 if armor.materials.wood then
-		armor:register_armor("3d_armor:gloves_wood", {
+		armor:register_armor("3d_armor_gloves:gloves_wood", {
 		description = S("Wood Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_wood.png",
 		groups = {armor_hands=1, armor_heal=0, armor_use=2000, flammable=1},
@@ -47,13 +45,13 @@ if armor.materials.wood then
 
 	minetest.register_craft({
 		type = "fuel",
-		recipe = "3d_armor:gloves_wood",
+		recipe = "3d_armor_gloves:gloves_wood",
 		burntime = 4,
 	})
 end
 
 if armor.materials.cactus then
-		armor:register_armor("3d_armor:gloves_cactus", {
+		armor:register_armor("3d_armor_gloves:gloves_cactus", {
 		description = S("Cactus Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_cactus.png",
 		groups = {armor_hands=1, armor_heal=0, armor_use=1000},
@@ -63,13 +61,13 @@ if armor.materials.cactus then
 
 	minetest.register_craft({
 		type = "fuel",
-		recipe = "3d_armor:gloves_cactus",
+		recipe = "3d_armor_gloves:gloves_cactus",
 		burntime = 8,
 	})
 end
 
 if armor.materials.steel then
-		armor:register_armor("3d_armor:gloves_steel", {
+		armor:register_armor("3d_armor_gloves:gloves_steel", {
 		description = S("Steel Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_steel.png",
 		groups = {armor_hands=1, armor_heal=0, armor_use=800,
@@ -80,7 +78,7 @@ if armor.materials.steel then
 end
 
 if armor.materials.bronze then
-		armor:register_armor("3d_armor:gloves_bronze", {
+		armor:register_armor("3d_armor_gloves:gloves_bronze", {
 		description = S("Bronze Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_bronze.png",
 		groups = {armor_hands=1, armor_heal=6, armor_use=400,
@@ -91,7 +89,7 @@ if armor.materials.bronze then
 end
 
 if armor.materials.diamond then
-		armor:register_armor("3d_armor:gloves_diamond", {
+		armor:register_armor("3d_armor_gloves:gloves_diamond", {
 		description = S("Diamond Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_diamond.png",
 		groups = {armor_hands=1, armor_heal=12, armor_use=200},
@@ -101,7 +99,7 @@ if armor.materials.diamond then
 end
 
 if armor.materials.gold then
-		armor:register_armor("3d_armor:gloves_gold", {
+		armor:register_armor("3d_armor_gloves:gloves_gold", {
 		description = S("Gold Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_gold.png",
 		groups = {armor_hands=1, armor_heal=6, armor_use=300,
@@ -112,7 +110,7 @@ if armor.materials.gold then
 end
 
 if armor.materials.mithril then
-		armor:register_armor("3d_armor:gloves_mithril", {
+		armor:register_armor("3d_armor_gloves:gloves_mithril", {
 		description = S("Mithril Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_mithril.png",
 		groups = {armor_hands=1, armor_heal=12, armor_use=100},
@@ -122,7 +120,7 @@ if armor.materials.mithril then
 end
 
 if armor.materials.crystal then
-		armor:register_armor("3d_armor:gloves_crystal", {
+		armor:register_armor("3d_armor_gloves:gloves_crystal", {
 		description = S("Crystal Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_crystal.png",
 		groups = {armor_hands=1, armor_heal=12, armor_use=100, physics_speed=1,
@@ -134,10 +132,13 @@ end
 
 for k, v in pairs(armor.materials) do
 	minetest.register_craft({
-		output = "3d_armor:gloves_"..k,
+		output = "3d_armor_gloves:gloves_"..k,
 		recipe = {
 			{v, "", v},
 			{"farming:string", "", "farming:string"},
 		},
 	})
+
+minetest.register_alias("3d_armor:gloves_"..k, "3d_armor_gloves:gloves_"..k)
+
 end
