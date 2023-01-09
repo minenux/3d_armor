@@ -1,10 +1,10 @@
 -- support for i18n
-local S = armor_i18n.gettext
-
 if not minetest.global_exists("sfinv") then
 	minetest.log("warning", "[3d_armor_sfinv]: Mod loaded but unused.")
 	return
 end
+
+local S = armor_i18n.gettext
 
 sfinv.register_page("3d_armor:armor", {
 	title = S("Armor"),

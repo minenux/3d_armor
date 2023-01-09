@@ -1,1 +1,1 @@
-Adds 3d_armor page to the sfinv inventory.
+ARMOR PAGE to the simple fast inventory.
