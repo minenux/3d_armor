@@ -1,8 +1,51 @@
-# [mod] Visible Player Armor [3d_armor]
+minetest mod 3d_armor
+=====================
+
+ARMOR for players
+
+## Information
+--------------
+
+Adds craftable armor that is visible to other players that allows players to equip 
+making them less vulnerable to weapons, takes damage when a player is hurt but 
+also offers a percentage chance of healing.
+
+![screenshot.png](screenshot.png)
+
+## Technical info
+-----------------
+
+This mod is named `3d_armor` and each armor item worn contributes to a player's 
+armor group level Armor Overall level is boosted by 10% when wearing a full matching set.
+
+Fire protection added by TenPlus1 when using crystal armor if Ethereal mod active, level 1
+protects against torches, level 2 for crystal spike, level 3 for fire, level 5 for lava.
+
+#### Depends: 
+
+* default
+
+Following are need to manage armors on the player:
+
+* sfinv
+* unified_inventory
+* smart_inventory
+
+You must use only one.
+
+Optional depends 
+
+* player_monoids
+* armor_monoid
+* pova
+* fire
+* ethereal
+* nether
+* moreores
 
 |  |  |  |  | 
 |--|--|--|--|
-|-[Overview](#overview)                                                     |||-[API](#api)
+|-[Technical info](#technical-info)                                         |||-[API](#api)
 |-[Armor Configuration](#armor-configuration)                               |||- - [3d_Armor Item Storage](#3d_armor-item-storage)
 |- - [disable_specific_materials](#to-disable-individual-armor-materials)   |||- - [Armor Registration](#armor-registration)
 |- - [armor_init_delay](#initialization-glitches-when-a-player-first-joins) |||- - [Registering Armor Groups](#registering-armor-groups)
@@ -24,121 +67,49 @@
 |                                                                           |||- - - [Item callbacks](#item-callbacks)
 |                                                                           |||- - - [Global callbacks](#global-callbacks)
 
-# Overview
-
-**Depends:** default
-
-**Recommends:** sfinv, unified_inventory or smart_inventory (use only one to avoid conflicts)
-
-**Supports:** player_monoids, armor_monoid and POVA
-
-Adds craftable armor that is visible to other players. Each armor item worn contributes to
-a player's armor group level making them less vulnerable to weapons.
-
-Armor takes damage when a player is hurt but also offers a percentage chance of healing.
-Overall level is boosted by 10% when wearing a full matching set.
-
-# Armor Configuration
+## Armor Configuration
 
 Change the following default settings by going to Main Menu>>Settings(Tab)>>All Settings(Button)>>Mods>>minetest-3d_Armor>>3d_Armor
 
-### To disable individual armor materials
- **set the below to false**
+Override the following default settings by adding them to your minetest.conf file.
 
-    armor_material_wood = true
-    armor_material_cactus = true
-    armor_material_steel = true
-    armor_material_bronze = true
-    armor_material_diamond = true
-    armor_material_gold = true
-    armor_material_mithril = true
-    armor_material_crystal = true
-    armor_material_nether = true
+| Setting                |  type | default | descripton                    |
+| ---------------------- | ---- | ---- | --------------------------------- |
+| armor_material_wood    | bool | true | Set false to disable wood armors |
+| armor_material_cactus  | bool | true | Set false to disable cactus armor |
+| armor_material_steel   | bool | true | Set false to disable steel armor|
+| armor_material_bronze  | bool | true | Set false to disable bronze armor |
+| armor_material_diamond | bool | true | Set false to disable diamond armor |
+| armor_material_gold    | bool | true | Set false to disable gold armor |
+| armor_material_mithril | bool | true | Set false to disable mitrhil armor |
+| armor_material_crystal | bool | true | Set false to disable crystal armors |
+| armor_material_nether  | bool | true | Set false to disable nether armor   |
+| armor_init_delay       | int  |  2   | Increase it if get glitches when a player first joins |
+| armor_init_times       | int  |  10  | Number of initialization attempts if previous still happnes |
+| armor_bones_delay      | int  |  1   | Increase it if armor is not getting into bones due to server lag.
+| armor_update_time      | int  |  2   | How often player armor items are updated |
+| armor_drop             | bool | true | Uses bones mod if present, otherwise items are dropped when false |
+| armor_destroy          | bool | false | Pulverise armor when a player dies, overrides armor_drop |
+| armor_level_multiplier | float| 0.1 | level to increase effects, 0.5 will reduce armor by half |
+| armor_heal_multiplier  | int  | 1 | increase or decrease overall armor healing, 0 disable it |
+| armor_set_multiplier   | float| 1.1 | Set to 1 to disable set bonux                            |
+| armor_water_protect    | bool | true | water protection (periodically restores breath when activated)
+| armor_punch_damage     | bool | true | Enable punch damage effects. |
+| armor_migrate_old_inventory | bool | true | Enable migration of old armor inventories |
+| armor_fire_protect     | bool | false | fire protection (defaults true if using ethereal mod) |
+| armor_fire_protect_torch | bool | false | allows you to disable fire damage from torches |
+| wieldview_update_time  | int  | 1 (xx) | How often player wield items are updated |
+| armor_set_elements     | string | (*) | Allows the customisation of armor set  |
 
-### Initialization glitches when a player first joins
- **Increase to prevent glitches**
- 
-    armor_init_delay = 2
+(*) by default is `head torso legs feet shield`, these names come from [Element names](#groups-used-by-3d_armor), 
+the second half of the element name only is used eg armor_head is head
 
-### Number of initialization attempts
- **Increase to prevent glitches - Use in conjunction with armor_init_delay if initialization problems persist.**
+(xx) Number represents how often per second update is performed, higher value means 
+less performance hit for servers but wield items maybe delayed in updating when switching. 
+Fractional seconds also supported eg 0.1 Note this is MT engine functionality but included 
+for completness
 
-    armor_init_times = 10
-
-### Armor not in bones due to server lag
- **Increase to help resolve**
- 
-    armor_bones_delay = 1
-
-### How often player armor items are updated
-**Number represents how often per second update is performed, higher value means less performance hit for servers but armor items maybe delayed in updating when switching.Fractional seconds also supported eg 0.1**
-
-    armor_update_time = 1
-	
-### Drop armor when a player dies
- **Uses bones mod if present, otherwise items are dropped around the player when false.**
-
-    armor_drop = true
-
-### Destroy armor when a player dies
- **overrides armor_drop.**
-
-    armor_destroy = false
-
-### Armor level multiplyer
- **Increase to make armor more effective and decrease to make armor less effective**
- **eg: level_multiplier = 0.5 will reduce armor level by half.**
-
-    armor_level_multiplier = 1
-
-### Armor healing multiplyer
- **Increase to make armor healing more effective and decrease to make healing less effective**
- **eg: armor_heal_multiplier = 0 will disable healing altogether.**
-
-    armor_heal_multiplier = 1
-	
-### Allows the customisation of armor set 
- **Shields already configured as need to be worn to complete an armor set**   
- **These names come from [Element names](#groups-used-by-3d_armor), the second half of the element name only is used eg armor_head is head**
- 
-    armor_set_elements = head torso legs feet shield
-
-### Armor set bonus multiplier 
- **Set to 1 to disable set bonus**
- 
-    armor_set_multiplier = 1.1
-
-### Enable water protection
- **periodically restores breath when activated**
-
-    armor_water_protect = true
-
-### Enable fire protection 
-**defaults to true if using ethereal mod**
-
-    armor_fire_protect = false
-	
-### Fire protection enabled, disable torch fire damage 
-**when fire protection is enabled allows you to disable fire damage from torches**
-**defaults to true if using ethereal mod**
-
-    armor_fire_protect_torch = false
-
-### Enable punch damage effects
-
-    armor_punch_damage = true
-
-### Migration of old armor inventories
-
-    armor_migrate_old_inventory = true
-	
-### How often player wield items are updated
-**Number represents how often per second update is performed, higher value means less performance hit for servers but wield items maybe delayed in updating when switching. Fractional seconds also supported eg 0.1**   
-***Note this is MT engine functionality but included for completness***
-
-    wieldview_update_time = 1
-
-# API
+## API
 
 ## 3d_Armor item storage
 3d_Armor stores each armor piece a player currently has equiped in a ***detached*** inventory. The easiest way to access this inventory if needed is using this line of code
