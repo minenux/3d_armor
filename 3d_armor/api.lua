@@ -153,7 +153,7 @@ armor = {
 		on_destroy = {},
 	},
 	migrate_old_inventory = true,
-	version = "0.4.12.1",
+	version = "0.4.12.2",
 	get_translator = S
 }
 
