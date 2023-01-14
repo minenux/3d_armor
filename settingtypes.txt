@@ -11,17 +11,17 @@ armor_material_crystal (Enable crystal armor) bool true
 armor_material_nether (Enable nether armor) bool true
 
 # Increase this if you get initialization glitches when a player first joins.
-armor_init_delay (Initialization delay) int 2
+armor_init_delay (Initialization delay) int 3
 
 # Number of initialization attempts.
 # Use in conjunction with armor_init_delay if initialization problems persist.
 armor_init_times (Initialization attempts) int 10
 
 # Increase this if armor is not getting into bones due to server lag.
-armor_bones_delay (Delay for bones) int 1
+armor_bones_delay (Delay for bones) int 2
 
 # How often player armor items are updated.
-armor_update_time (Armor refresh rate [seconds]) int 1
+armor_update_time (Armor refresh rate [seconds]) int 2
 
 # Drop armor when a player dies.
 # Uses bones mod if present, otherwise items are dropped around the player.
@@ -32,7 +32,7 @@ armor_destroy (Pulverize armor on death) bool false
 
 # You can use this to increase or decrease overall armor effectiveness,
 # eg: level_multiplier = 0.5 will reduce armor level by half.
-armor_level_multiplier (Armor effectiveness multiplier) float 1
+armor_level_multiplier (Armor effectiveness multiplier) float 0.5
 
 # You can use this to increase or decrease overall armor healing,
 # eg: armor_heal_multiplier = 0 will disable healing altogether.
