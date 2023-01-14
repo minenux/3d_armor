@@ -34,7 +34,8 @@ For the inventory it provides integration for `sfinv`, `inventory_plus` and `uni
 
 ### [mod] Visible Player Armor [3d_armor]
 
-Minetest Version: 5.0.0+
+Minetest Version: 5.X+ (check the master branch or use the release 0.4.13.1)
+For minetest older 0.4 (check the stable-4.0 branch or use the release 0.4.12.1)
 
 Game: minetest_game and many derivatives
 
