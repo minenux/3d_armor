@@ -219,3 +219,9 @@ License Textures: Copyright (C) 2017 davidthecreator - CC-BY-SA 3.0
 
 https://github.com/daviddoesminetest/3d-armors-new-textures
 
+Changes the color of the admin armor from stupid rose 3d_armor mod to black.
+
+License: Creative Commons Attribution-NonCommercial-ShareAlike
+
+https://github.com/LoneWolfHT/MT-adminarmor.git
+
