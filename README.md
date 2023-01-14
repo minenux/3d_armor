@@ -1,4 +1,4 @@
-minetest modpack 3d Armor [0.4.12.0]
+minetest modpack 3d Armor
 ===========================
 
 ARMOR pack for your gameplay
@@ -21,16 +21,18 @@ It can be download from
 * https://git.minetest.io/minenux/minetest-mod-3d_armor
 * https://codeberg.org/minenux/minetest-mod-3d_armor
 
+This modpack provides `3d_armor`, `3d_armor_gloves`, `3d_armor_stand`, `shields` and `wieldview`
 
-### Table of Contents
+Aditional this particular modpack integrates back `3d_armor_technic`
 
-- [[mod] Visible Player Armor [3d_armor]](#mod-visible-player-armor-3d_armor)
+For the inventory it provides integration for `sfinv`, `inventory_plus` and `unified_inventory`
+
+- [[mod] Visible Player Armor [3d_armor and 3d_armor_technic]](#mod-visible-player-armor-3d_armor)
 - [[mod] Visible Wielded Items [wieldview]](#mod-visible-wielded-items-wieldview)
 - [[mod] Shields [shields]](#mod-shields-shields)
 - [[mod] 3d Armor Stand [3d_armor_stand]](#mod-3d-armor-stand-3d_armor_stand)
 
-[mod] Visible Player Armor [3d_armor]
--------------------------------------
+### [mod] Visible Player Armor [3d_armor]
 
 Minetest Version: 0.4.16 +
 
@@ -61,24 +63,34 @@ see armor.conf.example for all available options.
 
 For mod installation instructions, please visit: http://wiki.minetest.com/wiki/Installing_Mods
 
-[mod] Visible Wielded Items [wieldview]
----------------------------------------
+### [mod] Visible Wielded Items [wieldview]
 
 Depends: 3d_armor
 
 Makes hand wielded items visible to other players.
 
-[mod] Shields [shields]
------------------------
+### [mod] Shields [shields]
 
 Depends: 3d_armor
 
 Originally a part of 3d_armor, shields have been re-included as an optional extra.
 If you do not want shields then simply remove the shields folder from the modpack.
 
-[mod] 3d Armor Stand [3d_armor_stand]
--------------------------------------
+### [mod] 3d Armor Stand [3d_armor_stand]
 
 Depends: 3d_armor
 
 Adds a chest-like armor stand for armor storage and display.
+
+## LICENSE
+
+License Source Code: Copyright (C) 2013-2018 Stuart Jones - LGPL v2.1
+
+Armor Textures: Copyright (C) 2017-2018 davidthecreator - CC-BY-SA 3.0
+
+Special credit to Jordach and MirceaKitsune for providing the default 3d character model.
+
+Changes the color of the admin armor from stupid rose 3d_armor mod to black.
+
+License: Creative Commons Attribution-NonCommercial-ShareAlike
+
