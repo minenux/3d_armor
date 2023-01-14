@@ -1,28 +1,40 @@
-Modpack - 3d Armor
-==================
-![3d_armor screenshot](https://github.com/minetest-mods/3d_armor/blob/master/screenshot.png)
+minetest modpack 3d Armor
+===========================
 
+ARMOR pack for your gameplay
 
-![](https://github.com/minetest-mods/3d_armor/workflows/luacheck/badge.svg)
-![](https://github.com/minetest-mods/3d_armor/workflows/integration-test/badge.svg)
+## Information
+--------------
 
-### Table of Contents
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+This mod provides ARMORS to your gameplays, such like shields, gloves, wielded, 
+helmet, chestplate, leggings and boots.
 
-- [[mod] Visible Player Armor [3d_armor]](#mod-visible-player-armor-3d_armor)
+![screenshot.png](screenshot.png)
+
+## Technical info
+-----------------
+
+This modpack must be named `3d_armor` and enables armor manage for the gameplay
+
+It can be download from 
+
+* https://git.minetest.io/minenux/minetest-mod-3d_armor
+* https://codeberg.org/minenux/minetest-mod-3d_armor
+
+This modpack provides `3d_armor`, `3d_armor_gloves`, `3d_armor_stand`, `shields` and `wieldview`
+
+Aditional this particular modpack integrates back `3d_armor_technic`
+
+For the inventory it provides integration for `sfinv`, `inventory_plus` and `unified_inventory`
+
+- [[mod] Visible Player Armor [3d_armor and 3d_armor_technic]](#mod-visible-player-armor-3d_armor)
 - [[mod] Visible Wielded Items [wieldview]](#mod-visible-wielded-items-wieldview)
 - [[mod] Shields [shields]](#mod-shields-shields)
 - [[mod] 3d Armor Stand [3d_armor_stand]](#mod-3d-armor-stand-3d_armor_stand)
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+### [mod] Visible Player Armor [3d_armor]
 
-
-[mod] Visible Player Armor [3d_armor]
--------------------------------------
-
-Minetest Version: 5.0.0 and newer
+Minetest Version: 5.0.0+
 
 Game: minetest_game and many derivatives
 
@@ -53,7 +65,11 @@ For **mod installation** instructions, please visit: http://wiki.minetest.com/wi
 
 The specific "armors as modpack" refactorization allows anyone to enable/disable any armors they want as mods rather than obscure settings of the past. (See [#78](https://github.com/minetest-mods/3d_armor/commit/9444afd7222a71fc17d40c9793506812d715dcc3) for further explanation.)
 
+[API Reference](https://minetest-mods.github.io/3d_armor/reference/)
+
 Currently, the modpack includes:
+
+#### Mod armor 3d_armor list
 
 - armor_admin
 - armor_bronze
@@ -65,29 +81,38 @@ Currently, the modpack includes:
 - armor_nether
 - armor_steel
 - armor_wood
+- armor_technic
 
 as separate armor mods intentionally. All these mods depend on 3d_armor.
 
-[API Reference](https://minetest-mods.github.io/3d_armor/reference/)
-
-[mod] Visible Wielded Items [wieldview]
----------------------------------------
+### [mod] Visible Wielded Items [wieldview]
 
 Depends: 3d_armor
 
 Makes hand wielded items visible to other players.
 
-[mod] Shields [shields]
------------------------
+### [mod] Shields [shields]
 
 Depends: 3d_armor
 
 Originally a part of 3d_armor, shields have been re-included as an optional extra.
 If you do not want shields then simply remove the shields folder from the modpack.
 
-[mod] 3d Armor Stand [3d_armor_stand]
--------------------------------------
+### [mod] 3d Armor Stand [3d_armor_stand]
 
 Depends: 3d_armor
 
 Adds a chest-like armor stand for armor storage and display.
+
+## LICENSE
+
+License Source Code: Copyright (C) 2013-2018 Stuart Jones - LGPL v2.1
+
+Armor Textures: Copyright (C) 2017-2018 davidthecreator - CC-BY-SA 3.0
+
+Special credit to Jordach and MirceaKitsune for providing the default 3d character model.
+
+Changes the color of the admin armor from stupid rose 3d_armor mod to black.
+
+License: Creative Commons Attribution-NonCommercial-ShareAlike
+
