@@ -77,7 +77,7 @@ end
 
 if minetest.get_modpath("technic") then
 	armor.formspec = armor.formspec..
-		"label[5,2.5;"..F(S("Radiation"))..":  armor_group_radiation]"
+		"label[5,2.5;"..F(S("Radiation"))..": armor_group_radiation]"
 	armor:register_armor_group("radiation")
 end
 local skin_mods = {"skins", "u_skins", "simple_skins", "wardrobe"}
@@ -106,9 +106,9 @@ dofile(modpath.."/armor.lua")
 
 armor.formspec = armor.formspec..
 	"label[5,1;"..F(S("Level"))..": armor_level]"..
-	"label[5,1.5;"..F(S("Heal"))..":  armor_attr_heal]"
+	"label[5,1.5;"..F(S("Heal"))..": armor_attr_heal]"
 if armor.config.fire_protect then
-	armor.formspec = armor.formspec.."label[5,2;"..F(S("Fire"))..":  armor_attr_fire]"
+	armor.formspec = armor.formspec.."label[5,2;"..F(S("Fire"))..": armor_attr_fire]"
 end
 armor:register_on_destroy(function(player, index, stack)
 	local name = player:get_player_name()
@@ -313,8 +313,10 @@ end)
 
 minetest.register_on_joinplayer(function(player)
 	default.player_set_model(player, "3d_armor_character.b3d")
+	local player_name = player:get_player_name()
 	minetest.after(0, function(player)
-		if init_player_armor(player) == false then
+		local pplayer = minetest.get_player_by_name(player_name)
+		if pplayer and init_player_armor(player) == false then
 			pending_players[player] = 0
 		end
 	end, player)
