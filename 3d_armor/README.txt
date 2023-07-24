@@ -96,7 +96,7 @@ Additional fields supported by 3d_armor:
 	on_unequip = <function>
 	on_destroy = <function>
 	on_damage = <function>
-	on_punch = <function>
+	on_punched = <function>
 
 armor:register_armor_group(group, base)
 
@@ -173,7 +173,7 @@ on_equip = func(player, index, stack)
 on_unequip = func(player, index, stack)
 on_destroy = func(player, index, stack)
 on_damage = func(player, index, stack)
-on_punch = func(player, hitter, time_from_last_punch, tool_capabilities)
+on_punched = func(player, hitter, time_from_last_punch, tool_capabilities)
 
 Notes:
 

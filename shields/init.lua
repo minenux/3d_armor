@@ -225,3 +225,5 @@ for k, v in pairs(armor.materials) do
 		},
 	})
 end
+
+minetest.log("[3d_armor:shields] mod loaded successfully")

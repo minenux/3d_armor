@@ -1,4 +1,3 @@
--- support for i18n
 local S = armor_i18n.gettext
 
 local skin_previews = {}
@@ -76,7 +75,8 @@ armor = {
 		on_destroy = {},
 	},
 	migrate_old_inventory = true,
-	version = "0.4.13",
+	version = "0.4.15",
+  	get_translator = S
 }
 
 armor.config = {
@@ -338,6 +338,8 @@ armor.punch = function(self, player, hitter, time_from_last_punch, tool_capabili
 	if not name then
 		return
 	end
+	local set_state
+	local set_count
 	local state = 0
 	local count = 0
 	local recip = true
@@ -345,12 +347,12 @@ armor.punch = function(self, player, hitter, time_from_last_punch, tool_capabili
 	local list = armor_inv:get_list("armor")
 	for i, stack in pairs(list) do
 		if stack:get_count() == 1 then
-			local name = stack:get_name()
-			local use = minetest.get_item_group(name, "armor_use") or 0
+			local itemname = stack:get_name()
+			local use = minetest.get_item_group(itemname, "armor_use") or 0
 			local damage = use > 0
 			local def = stack:get_definition() or {}
-			if type(def.on_punch) == "function" then
-				damage = def.on_punch(player, hitter, time_from_last_punch,
+			if type(def.on_punched) == "function" then
+				damage = def.on_punched(player, hitter, time_from_last_punch,
 					tool_capabilities) ~= false and damage == true
 			end
 			if damage == true and tool_capabilities then
@@ -397,7 +399,7 @@ armor.punch = function(self, player, hitter, time_from_last_punch, tool_capabili
 				end
 			end
 			if damage == true and hitter == "fire" then
-				damage = minetest.get_item_group(name, "flammable") > 0
+				damage = minetest.get_item_group(itemname, "flammable") > 0
 			end
 			if damage == true then
 				self:damage(player, i, stack, use)
@@ -444,13 +446,13 @@ armor.get_weared_armor_elements = function(self, player)
 		local item_name = inv:get_stack("armor", i):get_name()
 		local element = self:get_element(item_name)
 		if element ~= nil then
-		weared_armor[element] = item_name
+			weared_armor[element] = item_name
 		end
 	end
 	return weared_armor
 end
 
-armor.equip = function(self, player, armor_name)
+armor.equip = function(self, player, itemstack)
 	local name, armor_inv = self:get_valid_player(player, "[equip]")
 	local armor_element = self:get_element(itemstack:get_name())
 	if name and armor_element then
@@ -474,9 +476,8 @@ armor.equip = function(self, player, armor_name)
 	return itemstack
 end
 
-armor.unequip = function(self, player, armor_name)
+armor.unequip = function(self, player, armor_element)
 	local name, armor_inv = self:get_valid_player(player, "[unequip]")
-	local weared_armor = self:get_weared_armor_elements(player)
 	if not name then
 		return
 	end
@@ -499,6 +500,19 @@ armor.unequip = function(self, player, armor_name)
 		end
 	end
 end
+
+armor.remove_all = function(self, player)
+    local name, inv = self:get_valid_player(player, "[remove_all]")
+	if not name then
+		return
+    end
+	inv:set_list("armor", {})
+	self:set_player_armor(player)
+	self:save_armor_inventory(player)
+end
+
+local skin_mod
+
 
 armor.get_player_skin = function(self, name)
 	if (self.skin_mod == "skins" or self.skin_mod == "simple_skins") and skins.skins[name] then
@@ -583,7 +597,13 @@ end
 armor.load_armor_inventory = function(self, player)
 	local _, inv = self:get_valid_player(player, "[load_armor_inventory]")
 	if inv then
-		local armor_list_string = player:get_attribute("3d_armor_inventory")
+		local armor_list_string
+		if minetest.has_feature("object_use_texture_alpha") then
+			local meta = player:get_meta()
+			armor_list_string = meta:get_string("3d_armor_inventory")
+		else
+			armor_list_string = player:get_attribute("3d_armor_inventory")
+		end
 		if armor_list_string then
 			inv:set_list("armor",
 				self:deserialize_inventory_list(armor_list_string))
@@ -595,13 +615,20 @@ end
 armor.save_armor_inventory = function(self, player)
 	local _, inv = self:get_valid_player(player, "[save_armor_inventory]")
 	if inv then
-		player:set_attribute("3d_armor_inventory",
-			self:serialize_inventory_list(inv:get_list("armor")))
+		if minetest.has_feature("object_use_texture_alpha") then
+			local meta = player:get_meta()
+			meta:set_string("3d_armor_inventory",
+				self:serialize_inventory_list(inv:get_list("armor")))
+		else
+			player:set_attribute("3d_armor_inventory",
+				self:serialize_inventory_list(inv:get_list("armor")))
+		end
 	end
 end
 
 armor.update_inventory = function(self, player)
 	-- DEPRECATED: Legacy inventory support
+	minetest.log("warning", "[3d_armor] deprecated api call update_inventory")
 end
 
 armor.set_inventory_stack = function(self, player, i, stack)
@@ -615,7 +642,7 @@ end
 armor.get_valid_player = function(self, player, msg)
 	msg = msg or ""
 	if not player then
-		minetest.log("warning", S("3d_armor: Player reference is nil @1", msg))
+		minetest.log("warning", ("3d_armor%s: Player reference is nil"):format(msg))
 		return
 	end
 	if type(player) ~= "userdata" then
@@ -624,12 +651,14 @@ armor.get_valid_player = function(self, player, msg)
 	end
 	local name = player:get_player_name()
 	if not name then
-		minetest.log("warning", S("3d_armor: Player name is nil @1", msg))
+		minetest.log("warning", ("3d_armor%s: Player name is nil"):format(msg))
 		return
 	end
 	local inv = minetest.get_inventory({type="detached", name=name.."_armor"})
 	if not inv then
-		minetest.log("warning", S("3d_armor: Detached armor inventory is nil @1", msg))
+		-- This check may fail when called inside `on_joinplayer`
+		-- in that case, the armor will be initialized/updated later on
+		minetest.log("warning", ("3d_armor%s: Detached armor inventory is nil"):format(msg))
 		return
 	end
 	return name, inv
@@ -640,8 +669,11 @@ armor.drop_armor = function(pos, stack)
 	if node then
 		local obj = minetest.add_item(pos, stack)
 		if obj then
-			obj:setvelocity({x=math.random(-1, 1), y=5, z=math.random(-1, 1)})
+			obj:set_velocity({x=math.random(-1, 1), y=5, z=math.random(-1, 1)})
 		end
 	end
 end
 
+armor.set_skin_mod = function(mod)
+	skin_mod = mod
+end

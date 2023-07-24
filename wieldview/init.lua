@@ -84,3 +84,4 @@ minetest.register_globalstep(function(dtime)
 	end
 end)
 
+minetest.log("[3d_armor:wieldview] mod loaded successfully")
