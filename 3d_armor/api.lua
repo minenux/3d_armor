@@ -33,7 +33,7 @@ armor = {
 	timer = 0,
 	elements = {"head", "torso", "legs", "feet"},
 	physics = {"jump", "speed", "gravity"},
-	attributes = {"heal", "fire", "water"},
+	attributes = {"heal", "fire", "water", "feather"},
 	formspec = "image[2.5,0;2,4;armor_preview]"..
 		default.gui_bg..
 		default.gui_bg_img..
@@ -99,6 +99,7 @@ armor.config = {
 	water_protect = true,
 	fire_protect = minetest.get_modpath("ethereal") ~= nil,
 	fire_protect_torch = minetest.get_modpath("ethereal") ~= nil,
+	feather_fall = true,
 	punch_damage = true,
 }
 
@@ -615,6 +616,10 @@ armor.get_valid_player = function(self, player, msg)
 	msg = msg or ""
 	if not player then
 		minetest.log("warning", S("3d_armor: Player reference is nil @1", msg))
+		return
+	end
+	if type(player) ~= "userdata" then
+		-- Fake player, fail silently
 		return
 	end
 	local name = player:get_player_name()

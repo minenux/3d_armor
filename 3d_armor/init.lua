@@ -379,6 +379,10 @@ if armor.config.drop == true or armor.config.destroy == true then
 			end)
 		end
 	end)
+else -- reset un-dropped armor and it's effects
+	minetest.register_on_respawnplayer(function(player)
+		if player then armor:set_player_armor(player) end
+	end)
 end
 
 if armor.config.punch_damage == true then
@@ -416,6 +420,20 @@ end, true)
 
 minetest.register_globalstep(function(dtime)
 	timer = timer + dtime
+
+	if armor.config.feather_fall == true then
+		for _,player in pairs(minetest.get_connected_players()) do
+			local name = player:get_player_name()
+			if armor.def[name].feather > 0 then
+				local vel_y = player:get_velocity().y
+				if vel_y < 0 and vel_y < 3 then
+					vel_y = -(vel_y * 0.05)
+					player:add_velocity({x = 0, y = vel_y, z = 0})
+				end
+			end
+		end
+	end
+
 	if timer > armor.config.init_delay then
 		for player, count in pairs(pending_players) do
 			local remove = init_player_armor(player) == true
