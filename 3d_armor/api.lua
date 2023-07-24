@@ -311,7 +311,10 @@ armor.set_player_armor = function(self, player)
 		})
 		pova.do_override(player)
 	else
-		player:set_physics_override(physics)
+		local player_physics_locked = player:get_meta():get_int("player_physics_locked")
+		if player_physics_locked == nil or player_physics_locked == 0 then
+			player:set_physics_override(physics)
+		end
 	end
 	self.textures[name].armor = texture
 	self.textures[name].preview = preview
@@ -389,10 +392,16 @@ armor.punch = function(self, player, hitter, time_from_last_punch, tool_capabili
 			end
 			if damage == true then
 				self:damage(player, i, stack, use)
+				set_state = self.def[name].state
+				set_count = self.def[name].count
 			end
 			state = state + stack:get_wear()
 			count = count + 1
 		end
+	end
+	if set_count and set_count ~= count then
+		state = set_state or state
+		count = set_count or count
 	end
 	self.def[name].state = state
 	self.def[name].count = count
