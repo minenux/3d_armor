@@ -69,7 +69,8 @@ minetest.register_on_joinplayer(function(player)
 	minetest.after(0, function(pname)
 		local pplayer = minetest.get_player_by_name(pname)
 		if pplayer then
-		wieldview:update_wielded_item(pplayer)
+			wieldview:update_wielded_item(pplayer)
+		end
 	end, name)
 end)
 
