@@ -103,6 +103,19 @@ armor.config = {
 -- Armor Registration
 
 armor.register_armor = function(self, name, def)
+	def.on_secondary_use = function(itemstack, player)
+		return armor:equip(player, itemstack)
+	end
+	def.on_place = function(itemstack, player, pointed_thing)
+		if pointed_thing.type == "node" and player and not player:get_player_control().sneak then
+			local node = minetest.get_node(pointed_thing.under)
+			local ndef = minetest.registered_nodes[node.name]
+			if ndef and ndef.on_rightclick then
+				return ndef.on_rightclick(pointed_thing.under, node, player, itemstack, pointed_thing)
+			end
+		end
+		return armor:equip(player, itemstack)
+	end
 	minetest.register_tool(name, def)
 end
 
@@ -403,6 +416,72 @@ armor.damage = function(self, player, index, stack, use)
 	end
 end
 
+armor.get_weared_armor_elements = function(self, player)
+	local name, inv = self:get_valid_player(player, "[get_weared_armor]")
+	local weared_armor = {}
+	if not name then
+		return
+	end
+	for i=1, inv:get_size("armor") do
+		local item_name = inv:get_stack("armor", i):get_name()
+		local element = self:get_element(item_name)
+		if element ~= nil then
+		weared_armor[element] = item_name
+		end
+	end
+	return weared_armor
+end
+
+armor.equip = function(self, player, armor_name)
+	local name, armor_inv = self:get_valid_player(player, "[equip]")
+	local armor_element = self:get_element(itemstack:get_name())
+	if name and armor_element then
+		local index
+		for i=1, armor_inv:get_size("armor") do
+			local stack = armor_inv:get_stack("armor", i)
+			if self:get_element(stack:get_name()) == armor_element then
+				index = i
+				self:unequip(player, armor_element)
+				break
+			elseif not index and stack:is_empty() then
+				index = i
+			end
+		end
+		local stack = itemstack:take_item()
+		armor_inv:set_stack("armor", index, stack)
+		self:run_callbacks("on_equip", player, index, stack)
+		self:set_player_armor(player)
+		self:save_armor_inventory(player)
+	end
+	return itemstack
+end
+
+armor.unequip = function(self, player, armor_name)
+	local name, armor_inv = self:get_valid_player(player, "[unequip]")
+	local weared_armor = self:get_weared_armor_elements(player)
+	if not name then
+		return
+	end
+	for i=1, armor_inv:get_size("armor") do
+		local stack = armor_inv:get_stack("armor", i)
+		if self:get_element(stack:get_name()) == armor_element then
+			armor_inv:set_stack("armor", i, "")
+			minetest.after(0, function()
+				local inv = player:get_inventory()
+				if inv:room_for_item("main", stack) then
+					inv:add_item("main", stack)
+				else
+					minetest.add_item(player:get_pos(), stack)
+				end
+			end)
+			self:run_callbacks("on_unequip", player, i, stack)
+			self:set_player_armor(player)
+			self:save_armor_inventory(player)
+			return
+		end
+	end
+end
+
 armor.get_player_skin = function(self, name)
 	if (self.skin_mod == "skins" or self.skin_mod == "simple_skins") and skins.skins[name] then
 		return skins.skins[name]..".png"
@@ -543,3 +622,4 @@ armor.drop_armor = function(pos, stack)
 		end
 	end
 end
+
