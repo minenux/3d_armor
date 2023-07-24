@@ -311,7 +311,13 @@ armor.set_player_armor = function(self, player)
 		})
 		pova.do_override(player)
 	else
-		local player_physics_locked = player:get_meta():get_int("player_physics_locked")
+		local player_physics_locked 
+		if minetest.has_feature("object_use_texture_alpha") then
+			player_physics_locked = player:get_meta():get_int("player_physics_locked")
+		else
+			player_physics_locked = player:get_attribute("player_physics_locked")
+			if player_physics_locked ~= nil then tonumber(player_physics_locked) end
+		end
 		if player_physics_locked == nil or player_physics_locked == 0 then
 			player:set_physics_override(physics)
 		end
