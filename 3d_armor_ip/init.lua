@@ -3,7 +3,7 @@ local S = armor_i18n.gettext
 local F = minetest.formspec_escape
 
 if not minetest.global_exists("inventory_plus") then
-	minetest.log("warning", S("3d_armor_ip: Mod loaded but unused."))
+	minetest.log("warning", "[3d_armor_ip]: Mod loaded but unused.")
 	return
 end
 
@@ -36,3 +36,5 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 		inventory_plus.set_inventory_formspec(player, formspec)
 	end
 end)
+
+minetest.log("[3d_armor_ip]: Mod loaded successfully.")

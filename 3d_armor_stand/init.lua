@@ -351,3 +351,5 @@ minetest.register_craft({
 		{"3d_armor_stand:armor_stand", "default:steel_ingot"},
 	}
 })
+
+minetest.log("[3d_armor_stand]: Mod loaded successfully.")

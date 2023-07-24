@@ -4,7 +4,7 @@ local F = minetest.formspec_escape
 local has_technic = minetest.get_modpath("technic") ~= nil
 
 if not minetest.global_exists("unified_inventory") then
-	minetest.log("warning", S("3d_armor_ui: Mod loaded but unused."))
+	minetest.log("warning", "[3d_armor_ui]: Mod loaded but unused.")
 	return
 end
 
@@ -51,3 +51,5 @@ unified_inventory.register_page("armor", {
 		return {formspec=formspec}
 	end,
 })
+
+minetest.log("[3d_armor_ui]: Mod loaded successfully.")
