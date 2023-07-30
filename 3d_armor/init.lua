@@ -297,8 +297,16 @@ local function init_player_armor(initplayer)
 end
 
 -- Armor Player Model
-
-default.player_register_model("3d_armor_character.b3d", {
+local modelchar
+local eyeheithg
+if is_50 then
+	modelchar = "3d_armor_character50.b3d"
+	eyeheithg = 1.47
+else
+	modelchar = "3d_armor_character40.b3d"
+	eyeheithg = 1.625
+end
+armor.player_register_model(modelchar, {
 	animation_speed = 30,
 	textures = {
 		armor.default_skin..".png",
@@ -312,6 +320,10 @@ default.player_register_model("3d_armor_character.b3d", {
 		mine = {x=189, y=198},
 		walk_mine = {x=200, y=219},
 		sit = {x=81, y=160},
+		-- compatibility w/ the emote mod
+		wave = {x = 192, y = 196, override_local = true},
+		point = {x = 196, y = 196, override_local = true},
+		freeze = {x = 205, y = 205, override_local = true},
 	},
 })
 
@@ -333,7 +345,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 end)
 
 minetest.register_on_joinplayer(function(player)
-	default.player_set_model(player, "3d_armor_character.b3d")
+	armor.player_set_model(player, modelchar)
 	local player_name = player:get_player_name()
 	minetest.after(0, function(player)
 		local pplayer = minetest.get_player_by_name(player_name)

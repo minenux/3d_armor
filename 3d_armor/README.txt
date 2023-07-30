@@ -77,6 +77,28 @@ armor_migrate_old_inventory = true
 API
 ---
 
+player_api compatibility and default old mod
+
+`armor.registered_player_models`
+
+If `player_api` is present will be same as `player_api.registered_models` or `default.registered_player_models` otherwise
+
+`armor.player_register_model`
+
+If `player_api` is present will be same as `player_api.register_model` or `default.player_register_model` otherwise
+
+`armor.player_set_textures`
+
+If `player_api` is present will be same as `player_api.set_textures`or `default.player_set_textures` otherwise
+
+`armor.player_attached`
+
+If `player_api` is present will be same as `player_api.player_attached` otherwise `default.player_attached`
+
+`armor.player_set_model`
+
+If `player_api` is present will be same as `player_api.set_model` otherwise then `default.player_set_model`
+
 Armor Registration:
 
 armor:register_armor(name, def)

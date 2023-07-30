@@ -6,3 +6,4 @@ fire?
 ethereal?
 bakedclay?
 intllib?
+player_api?

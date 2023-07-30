@@ -103,6 +103,14 @@ armor.config = {
 	punch_damage = true,
 }
 
+local mpa =  minetest.global_exists("player_api")
+
+if mpa then armor.registered_player_models = player_api.registered_models else armor.registered_player_models = default.registered_player_models end
+if mpa then armor.player_register_model = player_api.register_model else armor.player_register_model = default.player_register_model end
+if mpa then armor.player_set_textures = player_api.set_textures else armor.player_set_textures = default.player_set_textures end
+if mpa then armor.player_attached = player_api.player_attached else armor.player_attached = default.player_attached end
+if mpa then armor.player_set_model = player_api.set_model else armor.player_set_model = default.player_set_model end
+
 -- Armor Registration
 
 armor.register_armor = function(self, name, def)
@@ -183,7 +191,7 @@ armor.update_player_visuals = function(self, player)
 	end
 	local name = player:get_player_name()
 	if self.textures[name] then
-		default.player_set_textures(player, {
+		armor.player_set_textures(player, {
 			self.textures[name].skin,
 			self.textures[name].armor,
 			self.textures[name].wielditem,
