@@ -340,7 +340,7 @@ msgstr "Latón"
 
 #: ../technic_armor/init.lua
 msgid "Cast Iron"
-msgstr "Hierro fundido"
+msgstr "Hierro"
 
 #: ../technic_armor/init.lua
 msgid "Carbon Steel"
