@@ -133,8 +133,15 @@ local function remove_hidden_node(pos)
 	end
 end
 
+-- The default is "opaque" for drawtypes normal, liquid and flowingliquid;
+-- "clip" otherwise.
+-- If set to a boolean value (deprecated): true either sets it to blend
+-- or clip, false sets it to clip or opaque mode depending on the drawtype.
+local mt_use_texture_alpha = true
+if armor.is_54 then mt_use_texture_alpha = "clip" else mt_use_texture_alpha = true end
+
 minetest.register_node("3d_armor_stand:top", {
-	description = S("Armor stand top"),
+	description = S("Armor Stand Top"),
 	paramtype = "light",
 	drawtype = "plantlike",
 	sunlight_propagates = true,
@@ -149,10 +156,11 @@ minetest.register_node("3d_armor_stand:top", {
 })
 
 minetest.register_node("3d_armor_stand:armor_stand", {
-	description = S("Armor stand"),
+	description = S("Armor Stand"),
 	drawtype = "mesh",
 	mesh = "3d_armor_stand.obj",
 	tiles = {"3d_armor_stand.png"},
+	use_texture_alpha = mt_use_texture_alpha,
 	paramtype = "light",
 	paramtype2 = "facedir",
 	walkable = false,
@@ -217,10 +225,11 @@ minetest.register_node("3d_armor_stand:armor_stand", {
 })
 
 minetest.register_node("3d_armor_stand:locked_armor_stand", {
-	description = S("Locked Armor stand"),
+	description = S("Locked Armor Stand"),
 	drawtype = "mesh",
 	mesh = "3d_armor_stand.obj",
 	tiles = {"3d_armor_stand_locked.png"},
+	use_texture_alpha = mt_use_texture_alpha,
 	paramtype = "light",
 	paramtype2 = "facedir",
 	walkable = false,
