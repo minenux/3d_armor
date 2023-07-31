@@ -236,8 +236,10 @@ local function init_player_armor(initplayer)
 			end
 			--cursed items cannot be unequiped by the player
 			local is_cursed = minetest.get_item_group(stack:get_name(), "cursed") ~= 0
-			if not minetest.is_creative_enabled(player) and is_cursed then
-				return 0
+			if minetest.get_modpath("creative") then
+				if not creative.is_creative_enabled(player) and is_cursed then
+					return 0
+				end
 			end
 			return stack:get_count()
 		end,
