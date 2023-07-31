@@ -72,7 +72,7 @@ shields_disable_sounds (Disable shield sounds) bool false
 [wieldview]
 
 # Set number of seconds between visible wielded item updates.
-wieldview_update_time (Wieldview refresh rate [seconds]) int 2
+wieldview_update_time (Wieldview refresh rate [seconds]) int 3
 
 # Show nodes as tiles, disabled by default.
 wieldview_node_tiles (Show nodes as tiles) bool false

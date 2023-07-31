@@ -1,27 +1,53 @@
-Modpack - 3d Armor [0.4.13]
+minetest modpack 3d Armor
 ===========================
 
-### Table of Contents
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+ARMOR pack for your gameplay
 
-- [[mod] Visible Player Armor [3d_armor]](#mod-visible-player-armor-3d_armor)
-- [[mod] Visible Wielded Items [wieldview]](#mod-visible-wielded-items-wieldview)
-- [[mod] Shields [shields]](#mod-shields-shields)
-- [[mod] 3d Armor Stand [3d_armor_stand]](#mod-3d-armor-stand-3d_armor_stand)
+## Information
+--------------
 
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+This mod provides ARMORS to your gameplays, such like shields, gloves, wielded, 
+helmet, chestplate, leggings and boots.
 
+![screenshot.png](screenshot.png)
 
-[mod] Visible Player Armor [3d_armor]
--------------------------------------
+## Technical info
+-----------------
 
-Minetest Version: 5.0.0
+This modpack must be named `3d_armor` and enables armor manage for the gameplay
+Makes hand wielded items visible to other players.
+Adds a chest-like armor stand for armor storage and display.
+
+It can be download from 
+
+* https://git.minetest.io/minenux/minetest-mod-3d_armor
+* https://codeberg.org/minenux/minetest-mod-3d_armor
+* https://gitlab.com/minenux/minetest-mod-3d_armor
+
+This modpack provides following mods (click on each item to get more information):
+
+* [`3d_armor`](3d_armors/README.md)
+* [`3d_armor_gloves`](3d_armor_gloves/README.md)
+* [`3d_armor_stand`](3d_armor_stand/README.md)
+* [`shields`](shields/README.md)
+* [`wieldview`](wieldview/README.md)
+
+Aditional this particular modpack integrates/back:
+
+* [`3d_armor_technic`](3d_armor_technic/README.md) originally `technic_armor`
+* [`3d_armor_mobile`](3d_armor_mobile/README.md) a nice way to wear for mobile play
+
+For the inventory it provides integration for:
+
+* [`3d_armor_sfinv`](3d_armor_sfinv/README.md) if detected `sfinv` mod
+* [`3d_armor_ip`](3d_armor_ip/README.md) for `inventory_plus` but only for newer engines (MT 5.0+)
+* [`3d_armor_ui`](3d_armor_ui/README.md) if detected `unified_inventory` mod
+
+The required minetest Version: 0.4.16 + this means ALL ENGINES including recent 5.X+
 
 Game: minetest_game and many derivatives
 
-Depends: default
+Depends: default (check each mod to get into aditional depends)
 
 Adds craftable armor that is visible to other players. Each armor item worn contributes to
 a player's armor group level making them less vulnerable to attack.
@@ -46,24 +72,17 @@ see armor.conf.example for all available options.
 
 For mod installation instructions, please visit: http://wiki.minetest.com/wiki/Installing_Mods
 
-[mod] Visible Wielded Items [wieldview]
----------------------------------------
-
-Depends: 3d_armor
-
-Makes hand wielded items visible to other players.
-
-[mod] Shields [shields]
------------------------
-
-Depends: 3d_armor
-
-Originally a part of 3d_armor, shields have been re-included as an optional extra.
-If you do not want shields then simply remove the shields folder from the modpack.
-
-[mod] 3d Armor Stand [3d_armor_stand]
--------------------------------------
-
-Depends: 3d_armor
-
 Adds a chest-like armor stand for armor storage and display.
+
+## LICENSE
+
+License Source Code: Copyright (C) 2013-2018 Stuart Jones - LGPL v2.1
+
+Armor Textures: Copyright (C) 2017-2018 davidthecreator - CC-BY-SA 3.0
+
+Special credit to Jordach and MirceaKitsune for providing the default 3d character model.
+
+Changes the color of the admin armor from stupid rose 3d_armor mod to black.
+
+License: Creative Commons Attribution-NonCommercial-ShareAlike
+
