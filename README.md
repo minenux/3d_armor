@@ -26,7 +26,7 @@ It can be download from
 
 This modpack provides following mods (click on each item to get more information):
 
-* [`3d_armor`](3d_armors/README.md)
+* [`3d_armor`](3d_armor/README.md)
 * [`3d_armor_gloves`](3d_armor_gloves/README.md)
 * [`3d_armor_stand`](3d_armor_stand/README.md)
 * [`shields`](shields/README.md)
