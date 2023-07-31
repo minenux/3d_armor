@@ -3,7 +3,7 @@
 local S = armor_i18n.gettext
 
 if not minetest.get_modpath("technic_worldgen") then
-	minetest.log("warning", S("[3d_armor_technic]: Mod loaded but unused."))
+	minetest.log("warning", "[3d_armor_technic]: Mod loaded but unused.")
 	return
 end
 
@@ -152,3 +152,6 @@ for material, m in pairs(materials) do
 		})
 	end
 end
+
+minetest.log("[3d_armor_technic]: Mod loaded successfully.")
+

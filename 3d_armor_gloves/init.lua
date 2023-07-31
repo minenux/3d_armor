@@ -147,3 +147,6 @@ for k, v in pairs(armor.materials) do
 minetest.register_alias("3d_armor:gloves_"..k, "3d_armor_gloves:gloves_"..k)
 
 end
+
+minetest.log("[3d_armor_gloves]: Mod loaded successfully.")
+
