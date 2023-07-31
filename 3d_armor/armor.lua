@@ -621,8 +621,8 @@ if armor.materials.gold then
 		description = S("Gold Helmet"),
 		inventory_image = "3d_armor_inv_helmet_gold.png",
 		groups = {armor_head=1, armor_heal=6, armor_use=300,
-			physics_speed=-0.02, physics_gravity=0.02},
-		armor_groups = {fleshy=10},
+			physics_speed=-0.02, physics_gravity=0.02, physics_jump=-0.01},
+		armor_groups = {fleshy=10, radiation=15},
 		damage_groups = {cracky=1, snappy=2, choppy=2, crumbly=3, level=2},
 	})
 	--- Gold Chestplate
@@ -644,8 +644,8 @@ if armor.materials.gold then
 		description = S("Gold Chestplate"),
 		inventory_image = "3d_armor_inv_chestplate_gold.png",
 		groups = {armor_torso=1, armor_heal=6, armor_use=300,
-			physics_speed=-0.05, physics_gravity=0.05},
-		armor_groups = {fleshy=15},
+			physics_speed=-0.05, physics_gravity=0.05, physics_jump=-0.04},
+		armor_groups = {fleshy=15, radiation=20},
 		damage_groups = {cracky=1, snappy=2, choppy=2, crumbly=3, level=2},
 	})
 	--- Gold Leggings
@@ -667,8 +667,8 @@ if armor.materials.gold then
 		description = S("Gold Leggings"),
 		inventory_image = "3d_armor_inv_leggings_gold.png",
 		groups = {armor_legs=1, armor_heal=6, armor_use=300,
-			physics_speed=-0.04, physics_gravity=0.04},
-		armor_groups = {fleshy=15},
+			physics_speed=-0.04, physics_gravity=0.04, physics_jump=-0.05},
+		armor_groups = {fleshy=15, radiation=25},
 		damage_groups = {cracky=1, snappy=2, choppy=2, crumbly=3, level=2},
 	})
 	--- Gold Boots
@@ -690,8 +690,8 @@ if armor.materials.gold then
 		description = S("Gold Boots"),
 		inventory_image = "3d_armor_inv_boots_gold.png",
 		groups = {armor_feet=1, armor_heal=6, armor_use=300,
-			physics_speed=-0.02, physics_gravity=0.02},
-		armor_groups = {fleshy=10},
+			physics_speed=-0.02, physics_gravity=0.02, physics_jump=-0.02},
+		armor_groups = {fleshy=10, radiation=15},
 		damage_groups = {cracky=1, snappy=2, choppy=2, crumbly=3, level=2},
 	})
 end
