@@ -54,6 +54,16 @@ wieldview.update_wielded_item = function(self, player)
 		return
 	end
 	if self.wielded_item[name] then
+		local swi
+		if minetest.has_feature("object_use_texture_alpha") then
+			local attribute_meta = player:get_meta() -- I know, the function's name is weird but let it be like that. ;)
+			swi = attribute_meta:get_int("show_wielded_item")
+		else
+			swi = tonumber(player:get_attribute("show_wielded_item") or 2)
+		end
+		if swi == 2 then
+			item = ""
+		end
 		if self.wielded_item[name] == item then
 			return
 		end

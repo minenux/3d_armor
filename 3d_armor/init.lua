@@ -4,17 +4,15 @@ local worldpath = minetest.get_worldpath()
 local last_punch_time = {}
 local pending_players = {}
 local timer = 0
-
--- support for i18n
-armor_i18n = { }
-armor_i18n.gettext, armor_i18n.ngettext = dofile(modpath.."/intllib.lua")
-
+local is_50 = minetest.has_feature("object_use_texture_alpha") or nil
+local is_54 = minetest.has_feature("use_texture_alpha_string_modes") or nil
 
 dofile(modpath.."/api.lua")
 
 -- local functions
 local F = minetest.formspec_escape
-local S = armor_i18n.gettext
+local S = armor.get_translator
+
 
 
 -- Legacy Config Support
@@ -64,6 +62,10 @@ for material, _ in pairs(armor.materials) do
 	end
 end
 
+-- Convert set_elements to a Lua table splitting on blank spaces
+local t_set_elements = armor.config.set_elements
+armor.config.set_elements = string.split(t_set_elements, " ")
+
 -- Remove torch damage if fire_protect_torch == false
 if armor.config.fire_protect_torch == false and armor.config.fire_protect == true then
 	for k,v in pairs(armor.fire_nodes) do
@@ -101,6 +103,9 @@ if not minetest.get_modpath("moreores") then
 end
 if not minetest.get_modpath("ethereal") then
 	armor.materials.crystal = nil
+end
+if not minetest.get_modpath("nether") then
+	armor.materials.nether = nil
 end
 
 dofile(modpath.."/armor.lua")
@@ -335,11 +340,7 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
 	local player_name = player:get_player_name()
 	for field, _ in pairs(fields) do
 		if string.find(field, "skins_set") then
-			minetest.after(0, function(player)
-				local skin = armor:get_player_skin(name)
-				armor.textures[name].skin = skin
-				armor:set_player_armor(player)
-			end, player)
+			armor:update_skin(player_name)
 		end
 	end
 end)
@@ -385,8 +386,8 @@ if armor.config.drop == true or armor.config.destroy == true then
 		if pos and armor.config.destroy == false then
 			minetest.after(armor.config.bones_delay, function()
 				local meta = nil
-				local maxp = vector.add(pos, 8)
-				local minp = vector.subtract(pos, 8)
+				local maxp = vector.add(pos, 16)
+				local minp = vector.subtract(pos, 16)
 				local bones = minetest.find_nodes_in_area(minp, maxp, {"bones:bones"})
 				for _, p in pairs(bones) do
 					local m = minetest.get_meta(p)
@@ -422,9 +423,8 @@ if armor.config.punch_damage == true then
 	minetest.register_on_punchplayer(function(player, hitter,
 			time_from_last_punch, tool_capabilities)
 		local name = player:get_player_name()
-		local tplayer = minetest.get_player_by_name(name)
-		local hplayer = minetest.is_player(hitter)
-		if name and tplayer and hplayer and minetest.is_protected(player:get_pos(), "") then
+		local hit_ip = hitter:is_player()
+		if name and hit_ip and minetest.is_protected(player:get_pos(), "") then
 			return
 		elseif name then
 			armor:punch(player, hitter, time_from_last_punch, tool_capabilities)
@@ -467,26 +467,38 @@ minetest.register_globalstep(function(dtime)
 		end
 	end
 
-	if timer > armor.config.init_delay then
-		for player, count in pairs(pending_players) do
-			local remove = init_player_armor(player) == true
-			pending_players[player] = count + 1
-			if remove == false and count > armor.config.init_times then
-				minetest.log("warning", S("3d_armor: Failed to initialize player"))
-				remove = true
-			end
-			if remove == true then
-				pending_players[player] = nil
+	if timer <= armor.config.init_delay then
+		return
+	end
+	timer = 0
+
+	for player, count in pairs(pending_players) do
+		local remove = init_player_armor(player) == true
+		pending_players[player] = count + 1
+		if remove == false and count > armor.config.init_times then
+			minetest.log("warning", S("3d_armor: Failed to initialize player"))
+			remove = true
+		end
+		if remove == true then
+			pending_players[player] = nil
+		end
+	end
+
+	-- water breathing protection, added by TenPlus1
+	if armor.config.water_protect == true then
+		for _,player in pairs(minetest.get_connected_players()) do
+			local name = player:get_player_name()
+			if armor.def[name].water > 0 and
+					player:get_breath() < 10 then
+				player:set_breath(10)
 			end
 		end
-		timer = 0
 	end
 end)
 
--- Fire Protection and water breating, added by TenPlus1
-
+-- Fire Protection, added by TenPlus1.
 if armor.config.fire_protect == true then
-	-- override hot nodes so they do not hurt player anywhere but mod
+	-- override any hot nodes that do not already deal damage
 	for _, row in pairs(armor.fire_nodes) do
 		if minetest.registered_nodes[row[1]] then
 			minetest.override_item(row[1], {damage_per_second = 0})
