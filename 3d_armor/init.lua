@@ -4,16 +4,12 @@ local worldpath = minetest.get_worldpath()
 local last_punch_time = {}
 local pending_players = {}
 local timer = 0
-local is_50 = minetest.has_feature("object_use_texture_alpha") or nil
-local is_54 = minetest.has_feature("use_texture_alpha_string_modes") or nil
 
 dofile(modpath.."/api.lua")
 
 -- local functions
 local F = minetest.formspec_escape
 local S = armor.get_translator
-
-
 
 -- Legacy Config Support
 
@@ -238,6 +234,11 @@ local function init_player_armor(initplayer)
 			if player:get_player_name() ~= name then
 				return 0
 			end
+			--cursed items cannot be unequiped by the player
+			local is_cursed = minetest.get_item_group(stack:get_name(), "cursed") ~= 0
+			if not minetest.is_creative_enabled(player) and is_cursed then
+				return 0
+			end
 			return stack:get_count()
 		end,
 		allow_move = function(inv, from_list, from_index, to_list, to_index, count, player)
@@ -304,7 +305,7 @@ end
 -- Armor Player Model
 local modelchar
 local eyeheithg
-if is_50 then
+if armor.is_50 then
 	modelchar = "3d_armor_character50.b3d"
 	eyeheithg = 1.47
 else
@@ -375,9 +376,12 @@ if armor.config.drop == true or armor.config.destroy == true then
 		for i=1, armor_inv:get_size("armor") do
 			local stack = armor_inv:get_stack("armor", i)
 			if stack:get_count() > 0 then
-				table.insert(drop, stack)
-				armor:run_callbacks("on_unequip", player, i, stack)
-				armor_inv:set_stack("armor", i, nil)
+				--soulbound armors remain equipped after death
+				if minetest.get_item_group(stack:get_name(), "soulbound") == 0 then
+					table.insert(drop, stack)
+					armor:run_callbacks("on_unequip", player, i, stack)
+					armor_inv:set_stack("armor", i, nil)
+				end
 			end
 		end
 		armor:save_armor_inventory(player)
@@ -413,7 +417,6 @@ if armor.config.drop == true or armor.config.destroy == true then
 			end)
 		end
 	end)
-else -- reset un-dropped armor and it's effects
 	minetest.register_on_respawnplayer(function(player)
 		if player then armor:set_player_armor(player) end
 	end)
@@ -434,17 +437,21 @@ if armor.config.punch_damage == true then
 end
 
 minetest.register_on_player_hpchange(function(player, hp_change)
-	if player and hp_change < 0 then
+	if player then
 		local name = player:get_player_name()
+		local properties = player:get_properties()
+		local hp = player:get_hp()
 		if name then
-			local heal = armor.def[name].heal
-			if heal >= math.random(100) then
-				hp_change = 0
-			end
-			-- check if armor damage was handled by fire or on_punchplayer
-			local time = last_punch_time[name] or 0
-			if time == 0 or time + 1 < minetest.get_gametime() then
-				armor:punch(player)
+			if hp + hp_change < properties.hp_max then
+				local heal = armor.def[name].heal
+				if heal >= math.random(100) then
+					hp_change = 0
+				end
+				-- check if armor damage was handled by fire or on_punchplayer
+				local time = last_punch_time[name] or 0
+				if time == 0 or time + 1 < minetest.get_gametime() then
+					armor:punch(player)
+				end
 			end
 		end
 	end
@@ -476,7 +483,7 @@ minetest.register_globalstep(function(dtime)
 		local remove = init_player_armor(player) == true
 		pending_players[player] = count + 1
 		if remove == false and count > armor.config.init_times then
-			minetest.log("warning", S("3d_armor: Failed to initialize player"))
+			minetest.log("warning", "3d_armor: Failed to initialize player")
 			remove = true
 		end
 		if remove == true then
@@ -509,6 +516,12 @@ else
 end
 
 if armor.config.water_protect == true or armor.config.fire_protect == true then
+
+	-- make torches hurt
+	minetest.override_item("default:torch", {damage_per_second = 1})
+	minetest.override_item("default:torch_wall", {damage_per_second = 1})
+	minetest.override_item("default:torch_ceiling", {damage_per_second = 1})
+
 	minetest.register_globalstep(function(dtime)
 		armor.timer = armor.timer + dtime
 		if armor.timer < armor.config.update_time then

@@ -133,6 +133,9 @@ local armor_textures = setmetatable({}, {
 		})
 	end
 })
+local is50 = minetest.has_feature("object_use_texture_alpha") or nil
+local is54 = minetest.has_feature("use_texture_alpha_string_modes") or nil
+
 
 armor = {
 	timer = 0,
@@ -182,16 +185,21 @@ armor = {
 		on_destroy = {},
 	},
 	migrate_old_inventory = true,
-	version = "0.4.15",
-	get_translator = S
+	version = "0.4.16",
+	get_translator = S,
+	is_50 = is50,
+	is_54 = is54,
 }
+
+local dropset
+if minetest.get_modpath("bones") then dropset = false else dropset = true end
 
 armor.config = {
 	init_delay = 2,
 	init_times = 10,
-	bones_delay = 1,
+	bones_delay = 3,
 	update_time = 1,
-	drop = minetest.get_modpath("bones") ~= nil,
+	drop = dropset,
 	destroy = false,
 	level_multiplier = 1,
 	heal_multiplier = 1,
@@ -524,10 +532,13 @@ armor.set_player_armor = function(self, player)
 		armor_monoid.monoid:add_change(player, change, "3d_armor:armor")
 	else
 		-- Preserve immortal group (damage disabled for player)
-		local immortal = player:get_armor_groups().immortal
+		local player_groups = player:get_armor_groups()
+		local immortal = player_groups.immortal
 		if immortal and immortal ~= 0 then
 			groups.immortal = 1
 		end
+		-- Preserve fall_damage_add_percent group (fall damage modifier)
+		groups.fall_damage_add_percent = player_groups.fall_damage_add_percent
 		player:set_armor_groups(groups)
 	end
 	if use_player_monoids then
@@ -717,6 +728,10 @@ armor.equip = function(self, player, itemstack)
 		for i=1, armor_inv:get_size("armor") do
 			local stack = armor_inv:get_stack("armor", i)
 			if self:get_element(stack:get_name()) == armor_element then
+				--prevents equiping an armor that would unequip a cursed armor.
+				if minetest.get_item_group(stack:get_name(), "cursed") ~= 0 then
+					return itemstack
+				end
 				index = i
 				self:unequip(player, armor_element)
 				break

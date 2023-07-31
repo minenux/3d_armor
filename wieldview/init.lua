@@ -55,7 +55,7 @@ wieldview.update_wielded_item = function(self, player)
 	end
 	if self.wielded_item[name] then
 		local swi
-		if minetest.has_feature("object_use_texture_alpha") then
+		if armor.is_50 then
 			local attribute_meta = player:get_meta() -- I know, the function's name is weird but let it be like that. ;)
 			swi = attribute_meta:get_int("show_wielded_item")
 		else
@@ -88,7 +88,9 @@ minetest.register_globalstep(function(dtime)
 	time = time + dtime
 	if time > update_time then
 		for _,player in ipairs(minetest.get_connected_players()) do
-			wieldview:update_wielded_item(player)
+			if player then
+				wieldview:update_wielded_item(player)
+			end
 		end
 		time = 0
 	end
