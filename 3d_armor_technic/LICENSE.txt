@@ -1,0 +1,6 @@
+License Source Code: Copyright (C) 2013-2018 Stuart Jones - LGPL v2.1
+
+License Source Code: Copyright (C) 2023 mckayerhard CC-BY-SA-NC
+
+License Textures: poet-nohit and numberZero - 2015-2018 WTFPL
+
