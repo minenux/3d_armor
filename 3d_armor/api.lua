@@ -546,6 +546,7 @@ armor.set_player_armor = function(self, player)
 			"3d_armor:physics")
 		player_monoids.jump:add_change(player, physics.jump,
 			"3d_armor:physics")
+		-- this is break gravity for space when change armor...
 		player_monoids.gravity:add_change(player, physics.gravity,
 			"3d_armor:physics")
 	elseif use_pova_mod then
@@ -739,11 +740,13 @@ armor.equip = function(self, player, itemstack)
 				index = i
 			end
 		end
-		local stack = itemstack:take_item()
-		armor_inv:set_stack("armor", index, stack)
-		self:run_callbacks("on_equip", player, index, stack)
-		self:set_player_armor(player)
-		self:save_armor_inventory(player)
+		if index then
+			local stack = itemstack:take_item()
+			armor_inv:set_stack("armor", index, stack)
+			self:run_callbacks("on_equip", player, index, stack)
+			self:set_player_armor(player)
+			self:save_armor_inventory(player)
+		end
 	end
 	return itemstack
 end
