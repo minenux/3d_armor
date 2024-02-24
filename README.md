@@ -26,6 +26,9 @@ and faster response use this mod:
 * The mods are **compatible with minetest 0.4, 5.2, 5.3, 5.4 and multicraft 2.X**
 * The damage is not distributed 100% between the armor, it is only **distributed according to the height of the hit** puch from hitter
 * Repairs are simplified, you will reapir using only one mod from xdecor of minenux project
+* Improved **optimized reduced textures, with more colorfull aditions**
+* The texture of **admin armor was improved with new desing**
+* Some checks for avoid nil on game for older engines
 
 ### Contribution
 
@@ -87,7 +90,9 @@ and [simple_skins] by TenPlus1.
 Armor can be configured by adding a file called armor.conf in 3d_armor mod or world directory.
 see armor.conf.example for all available options.
 
-For mod installation instructions, please visit: http://wiki.minetest.com/wiki/Installing_Mods
+For mod installation instructions, please visit: http://wiki.minetest.org/wiki/Installing_Mods
+
+We promoted the [http://minetest.org](http://minetest.org) site!
 
 Adds a chest-like armor stand for armor storage and display.
 
@@ -101,5 +106,5 @@ Special credit to Jordach and MirceaKitsune for providing the default 3d charact
 
 Changes the color of the admin armor from stupid rose 3d_armor mod to black.
 
-License: Creative Commons Attribution-NonCommercial-ShareAlike
+License of this fork: **Creative Commons Attribution-NonCommercial-ShareAlike** CC-BY-SA-NC
 
