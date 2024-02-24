@@ -18,6 +18,23 @@ This modpack must be named `3d_armor` and enables armor manage for the gameplay
 Makes hand wielded items visible to other players.
 Adds a chest-like armor stand for armor storage and display.
 
+This is a **fork that unify all the 3d_armor mods.. the features on this 
+repository is the simplification & compatibility game of the mod**, this means you 
+will find a **more faster but less featured mod**.. if you want a minetest game with simple armors 
+and faster response use this mod:
+
+* The mods are **compatible with minetest 0.4, 5.2, 5.3, 5.4 and multicraft 2.X**
+* The damage is not distributed 100% between the armor, it is only **distributed according to the height of the hit** puch from hitter
+* Repairs are simplified, you will reapir using only one mod from xdecor of minenux project
+
+### Contribution
+
+The development is really at [https://codeberg.org/minenux/minetest-mod-3d_armor](https://codeberg.org/minenux/minetest-mod-3d_armor) you must follow minenux preferences to code!
+
+The mods that this special fork handle are developed at [https://git.minetest.io/minenux?q=3d_armor&tab=repositories](https://git.minetest.io/minenux?sort=recentupdate&language=&q=3d_armor&tab=repositories)
+
+### Download and requirements
+
 It can be download from 
 
 * https://git.minetest.io/minenux/minetest-mod-3d_armor
