@@ -34,7 +34,7 @@ end
 armor:register_armor("3d_armor_gloves:gloves_admin", {
 	description = S("Admin Gauntlets"),
 	inventory_image = "3d_armor_gloves_inv_gloves_admin.png",
-	groups = {armor_hands=1000, armor_heal=100, armor_use=0, not_in_creative_inventory=1},
+	groups = {armor_hands=1000, armor_heal=100, armor_use=0, armor_water=1, not_in_creative_inventory=1},
 })
 
 minetest.register_alias("admingloves", "3d_armor_gloves:gloves_admin")
@@ -59,7 +59,7 @@ if armor.materials.cactus then
 		armor:register_armor("3d_armor_gloves:gloves_cactus", {
 		description = S("Cactus Gauntlets"),
 		inventory_image = "3d_armor_gloves_inv_gloves_cactus.png",
-		groups = {armor_hands=1, armor_heal=0, armor_use=1000},
+		groups = {armor_hands=1, armor_heal=0, armor_use=1000, armor_water=1},
 		armor_groups = {fleshy=5},
 		damage_groups = {cracky=3, snappy=3, choppy=2, crumbly=2, level=1},
 	})
