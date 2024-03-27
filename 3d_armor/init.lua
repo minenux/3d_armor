@@ -388,6 +388,9 @@ end
 if armor.config.punch_damage == true then
 	minetest.register_on_punchplayer(function(player, hitter,
 			time_from_last_punch, tool_capabilities)
+		if hitter == nil or player == nil then
+			return
+		end
 		local name = player:get_player_name()
 		local tplayer = minetest.get_player_by_name(name)
 		local hplayer = minetest.is_player(hitter)
