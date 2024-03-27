@@ -427,16 +427,20 @@ end
 if armor.config.punch_damage == true then
 	minetest.register_on_punchplayer(function(player, hitter,
 			time_from_last_punch, tool_capabilities)
-		if hitter == nil or player == nil then
-			return
+		if hitter and player then
+			local hit_ip = hitter:is_player()
+			local name = player:get_player_name()
+			if name and hit_ip and minetest.is_protected(player:get_pos(), "") then
+				return
+			end
 		end
-		local name = player:get_player_name()
-		local hit_ip = hitter:is_player()
-		if name and hit_ip and minetest.is_protected(player:get_pos(), "") then
-			return
-		elseif name then
-			armor:punch(player, hitter, time_from_last_punch, tool_capabilities)
-			last_punch_time[name] = minetest.get_gametime()
+		-- hitter must be allowe to pass to on_punch as nil to check
+		if player then
+			local name = player:get_player_name()
+			if name then
+				armor:punch(player, hitter, time_from_last_punch, tool_capabilities)
+				last_punch_time[name] = minetest.get_gametime()
+			end
 		end
 	end)
 end
