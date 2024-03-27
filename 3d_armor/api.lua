@@ -768,6 +768,7 @@ armor.unequip = function(self, player, armor_element)
 		if self:get_element(stack:get_name()) == armor_element then
 			armor_inv:set_stack("armor", i, "")
 			minetest.after(0, function()
+				player = minetest.get_player_by_name(name) -- recall sync cos we are inside core.after
 				local inv = player:get_inventory()
 				if inv:room_for_item("main", stack) then
 					inv:add_item("main", stack)
