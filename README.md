@@ -1,7 +1,7 @@
 minetest modpack 3d Armor
 ===========================
 
-ARMOR pack for your gameplay
+ARMOR pack for your gameplay, **full all engines compatible**
 
 ## Information
 --------------
@@ -29,6 +29,11 @@ and faster response use this mod:
 * Improved **optimized reduced textures, with more colorfull aditions**
 * The texture of **admin armor was improved with new desing**
 * Some checks for avoid nil on game for older engines
+
+Differences
+
+This armor pack tracks all the upstream original Stuart ones, plus patches from mt-mods fork, 
+but the only removed feature is the protected armor stand and more detailes separate damage.
 
 ### Contribution
 
@@ -97,6 +102,8 @@ We promoted the [http://minetest.org](http://minetest.org) site!
 Adds a chest-like armor stand for armor storage and display.
 
 ## LICENSE
+
+License Source Code: Copyright (C) 2023+ PICCORO Lenz McKAY - CC-BY-SA-NC 3.0
 
 License Source Code: Copyright (C) 2013-2018 Stuart Jones - LGPL v2.1
 
