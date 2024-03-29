@@ -1,1 +1,1 @@
-Adds craftable armor that is visible to other players.
+ARMOR equipable for players
