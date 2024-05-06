@@ -15,8 +15,8 @@ Adds an `/armor` command which displays a more reduces inventory with armor supp
 
 This mod must be named `3d_armor_mobile` and will bring up a mobile-friendly armor formspec.
 
-It can be downloade from 
-* https://git.minetest.io/minenux/minetest-mod-3d_armor_mobile
+It can be downloade from  https://git.minetest.io/minenux/minetest-mod-3d_armor_mobile 
+but was already integrated into 3d armor mod !
 
 #### Compatibility
 

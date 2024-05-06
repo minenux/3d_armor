@@ -235,6 +235,8 @@ end)
 
 ## LICENSE
 
+License Source Code: (C) 2023 PICCORO Lenz McKAY
+
 License Source Code: (C) 2012-2017 Stuart Jones - LGPL v2.1
 
 License Textures: Copyright (C) 2017 davidthecreator - CC-BY-SA 3.0
