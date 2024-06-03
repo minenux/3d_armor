@@ -37,7 +37,7 @@ if minetest.get_modpath("technic_worldgen") then
 	materials.carbon = {
 		name = S("Carbon Steel"),
 		craft_item = "technic:carbon_steel_ingot",
--		armor = 2.7,
+		armor = 2.7,
 		heal = 10,
 		use = 100,
 		radiation = 40
